@@ -7,15 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		042527CA05B7025A8D5D20E4 /* Pods_ResumeCreator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6C5F7D66040E488ACEA247E /* Pods_ResumeCreator.framework */; };
 		7722CA00280600DD00B248DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722C9FF280600DD00B248DB /* AppDelegate.swift */; };
 		7722CA02280600DD00B248DB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA01280600DD00B248DB /* SceneDelegate.swift */; };
 		7722CA04280600DD00B248DB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA03280600DD00B248DB /* ViewController.swift */; };
 		7722CA07280600DD00B248DB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7722CA05280600DD00B248DB /* Main.storyboard */; };
 		7722CA09280600E000B248DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7722CA08280600E000B248DB /* Assets.xcassets */; };
 		7722CA0C280600E000B248DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7722CA0A280600E000B248DB /* LaunchScreen.storyboard */; };
+		7722CA152806022000B248DB /* ResumeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA142806022000B248DB /* ResumeModel.swift */; };
+		7722CA1A2806084100B248DB /* ResumeManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA192806084100B248DB /* ResumeManagerProtocol.swift */; };
+		7722CA1C28060B5800B248DB /* ResumeMockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA1B28060B5700B248DB /* ResumeMockManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22294E95EAF3080F08D7A2F3 /* Pods-ResumeCreator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ResumeCreator.debug.xcconfig"; path = "Target Support Files/Pods-ResumeCreator/Pods-ResumeCreator.debug.xcconfig"; sourceTree = "<group>"; };
 		7722C9FC280600DD00B248DB /* ResumeCreator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResumeCreator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7722C9FF280600DD00B248DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7722CA01280600DD00B248DB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +29,11 @@
 		7722CA08280600E000B248DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7722CA0B280600E000B248DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7722CA0D280600E000B248DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7722CA142806022000B248DB /* ResumeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeModel.swift; sourceTree = "<group>"; };
+		7722CA192806084100B248DB /* ResumeManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeManagerProtocol.swift; sourceTree = "<group>"; };
+		7722CA1B28060B5700B248DB /* ResumeMockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeMockManager.swift; sourceTree = "<group>"; };
+		D6C5F7D66040E488ACEA247E /* Pods_ResumeCreator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ResumeCreator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E59CFA2FDD908F027C0A124B /* Pods-ResumeCreator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ResumeCreator.release.xcconfig"; path = "Target Support Files/Pods-ResumeCreator/Pods-ResumeCreator.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +41,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				042527CA05B7025A8D5D20E4 /* Pods_ResumeCreator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4AE3C0B11CE97687CC0FE000 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D6C5F7D66040E488ACEA247E /* Pods_ResumeCreator.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		53A97DB496DFF5220C1A60FF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				22294E95EAF3080F08D7A2F3 /* Pods-ResumeCreator.debug.xcconfig */,
+				E59CFA2FDD908F027C0A124B /* Pods-ResumeCreator.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		7722C9F3280600DD00B248DB = {
 			isa = PBXGroup;
 			children = (
 				7722C9FE280600DD00B248DB /* ResumeCreator */,
 				7722C9FD280600DD00B248DB /* Products */,
+				53A97DB496DFF5220C1A60FF /* Pods */,
+				4AE3C0B11CE97687CC0FE000 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,6 +87,8 @@
 		7722C9FE280600DD00B248DB /* ResumeCreator */ = {
 			isa = PBXGroup;
 			children = (
+				7722CA18280607ED00B248DB /* Managers */,
+				7722CA132806020600B248DB /* Models */,
 				7722C9FF280600DD00B248DB /* AppDelegate.swift */,
 				7722CA01280600DD00B248DB /* SceneDelegate.swift */,
 				7722CA03280600DD00B248DB /* ViewController.swift */,
@@ -67,6 +100,23 @@
 			path = ResumeCreator;
 			sourceTree = "<group>";
 		};
+		7722CA132806020600B248DB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7722CA142806022000B248DB /* ResumeModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7722CA18280607ED00B248DB /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				7722CA192806084100B248DB /* ResumeManagerProtocol.swift */,
+				7722CA1B28060B5700B248DB /* ResumeMockManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +124,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7722CA10280600E000B248DB /* Build configuration list for PBXNativeTarget "ResumeCreator" */;
 			buildPhases = (
+				5773F13D2C52B41EFDF884FA /* [CP] Check Pods Manifest.lock */,
 				7722C9F8280600DD00B248DB /* Sources */,
 				7722C9F9280600DD00B248DB /* Frameworks */,
 				7722C9FA280600DD00B248DB /* Resources */,
+				D53AAC82C121E8C7AAF87675 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,13 +185,58 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5773F13D2C52B41EFDF884FA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ResumeCreator-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D53AAC82C121E8C7AAF87675 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ResumeCreator/Pods-ResumeCreator-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ResumeCreator/Pods-ResumeCreator-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ResumeCreator/Pods-ResumeCreator-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7722C9F8280600DD00B248DB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7722CA1C28060B5800B248DB /* ResumeMockManager.swift in Sources */,
 				7722CA04280600DD00B248DB /* ViewController.swift in Sources */,
 				7722CA00280600DD00B248DB /* AppDelegate.swift in Sources */,
+				7722CA152806022000B248DB /* ResumeModel.swift in Sources */,
+				7722CA1A2806084100B248DB /* ResumeManagerProtocol.swift in Sources */,
 				7722CA02280600DD00B248DB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,6 +379,7 @@
 		};
 		7722CA11280600E000B248DB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22294E95EAF3080F08D7A2F3 /* Pods-ResumeCreator.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -309,6 +407,7 @@
 		};
 		7722CA12280600E000B248DB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E59CFA2FDD908F027C0A124B /* Pods-ResumeCreator.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
