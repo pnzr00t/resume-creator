@@ -7,13 +7,14 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ResumeListViewController: UIViewController {
+    weak var coordinator: ResumeEditingRoute?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        view.backgroundColor = .green
+        title = "Resume list"
     }
-
-
 }
 
