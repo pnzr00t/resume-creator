@@ -9,7 +9,7 @@ import Foundation
 
 protocol ResumeManagerProtocol {
     func getResumeCount() -> Int
-    func getResume(index: Int) -> ResumeModel
+    func getResume(index: Int) -> ResumeModel?
     func addResume(_ resume: ResumeModel)
     func replaceResume(at index: Int, resume: ResumeModel)
 }

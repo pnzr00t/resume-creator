@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 class ResumeMockManager: ResumeManagerProtocol {
@@ -13,9 +14,10 @@ class ResumeMockManager: ResumeManagerProtocol {
         1
     }
     
-    func getResume(index: Int) -> ResumeModel {
+    func getResume(index: Int) -> ResumeModel? {
         return ResumeModel(
             resumeName: "test",
+            picture: UIImage(systemName: "search"),
             mobileNumberString: "+79631092767",
             emailAddress: "pnz.r00t@gmail.com",
             residenteAddress: "Russia Penza",
@@ -24,7 +26,7 @@ class ResumeMockManager: ResumeManagerProtocol {
             workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
             skillsList: ["iOS developer", "Analytic manager"],
             educationDetailList: [EducationDetailModel(classEducation: 4, passingYear: Date(), percentage: 99)],
-            projectDetail: [
+            projectDetailList: [
                 ProjectDetailModel(
                     projectName: "Pregnancy Tracker",
                     teamSize: 15,

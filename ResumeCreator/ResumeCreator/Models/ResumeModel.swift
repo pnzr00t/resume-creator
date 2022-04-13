@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 struct ResumeModel {
     let resumeName: String
+    let picture: UIImage?
     let mobileNumberString: String
     let emailAddress: String
     let residenteAddress: String
@@ -17,7 +19,7 @@ struct ResumeModel {
     let workSummaryList: [WorkInfoModel]
     let skillsList: [String]
     let educationDetailList: [EducationDetailModel]
-    let projectDetail: [ProjectDetailModel]
+    let projectDetailList: [ProjectDetailModel]
 }
 
 struct WorkInfoModel {

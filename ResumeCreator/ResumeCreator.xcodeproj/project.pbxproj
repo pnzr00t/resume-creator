@@ -17,6 +17,8 @@
 		7722CA152806022000B248DB /* ResumeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA142806022000B248DB /* ResumeModel.swift */; };
 		7722CA1A2806084100B248DB /* ResumeManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA192806084100B248DB /* ResumeManagerProtocol.swift */; };
 		7722CA1C28060B5800B248DB /* ResumeMockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA1B28060B5700B248DB /* ResumeMockManager.swift */; };
+		7722E28B280734B6008DB20B /* ResumeRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722E28A280734B6008DB20B /* ResumeRealmManager.swift */; };
+		773931C5280619F9007E0B1C /* ResumeRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773931C4280619F9007E0B1C /* ResumeRealmModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		7722CA142806022000B248DB /* ResumeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeModel.swift; sourceTree = "<group>"; };
 		7722CA192806084100B248DB /* ResumeManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeManagerProtocol.swift; sourceTree = "<group>"; };
 		7722CA1B28060B5700B248DB /* ResumeMockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeMockManager.swift; sourceTree = "<group>"; };
+		7722E28A280734B6008DB20B /* ResumeRealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeRealmManager.swift; sourceTree = "<group>"; };
+		773931C4280619F9007E0B1C /* ResumeRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeRealmModel.swift; sourceTree = "<group>"; };
 		D6C5F7D66040E488ACEA247E /* Pods_ResumeCreator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ResumeCreator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E59CFA2FDD908F027C0A124B /* Pods-ResumeCreator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ResumeCreator.release.xcconfig"; path = "Target Support Files/Pods-ResumeCreator/Pods-ResumeCreator.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,7 +66,6 @@
 				22294E95EAF3080F08D7A2F3 /* Pods-ResumeCreator.debug.xcconfig */,
 				E59CFA2FDD908F027C0A124B /* Pods-ResumeCreator.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -104,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				7722CA142806022000B248DB /* ResumeModel.swift */,
+				773931C4280619F9007E0B1C /* ResumeRealmModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -112,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				7722CA192806084100B248DB /* ResumeManagerProtocol.swift */,
+				7722E28A280734B6008DB20B /* ResumeRealmManager.swift */,
 				7722CA1B28060B5700B248DB /* ResumeMockManager.swift */,
 			);
 			path = Managers;
@@ -232,10 +237,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7722E28B280734B6008DB20B /* ResumeRealmManager.swift in Sources */,
 				7722CA1C28060B5800B248DB /* ResumeMockManager.swift in Sources */,
 				7722CA04280600DD00B248DB /* ViewController.swift in Sources */,
 				7722CA00280600DD00B248DB /* AppDelegate.swift in Sources */,
 				7722CA152806022000B248DB /* ResumeModel.swift in Sources */,
+				773931C5280619F9007E0B1C /* ResumeRealmModel.swift in Sources */,
 				7722CA1A2806084100B248DB /* ResumeManagerProtocol.swift in Sources */,
 				7722CA02280600DD00B248DB /* SceneDelegate.swift in Sources */,
 			);
