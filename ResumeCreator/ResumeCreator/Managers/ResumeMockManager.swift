@@ -10,37 +10,124 @@ import UIKit
 
 
 class ResumeMockManager: ResumeManagerProtocol {
-    func getResumeCount() -> Int {
-        1
-    }
+    var outResumeList = [ResumeModel]()
     
-    func getResume(index: Int) -> ResumeModel? {
-        return ResumeModel(
-            resumeName: "test",
-            picture: UIImage(systemName: "search"),
-            mobileNumberString: "+79631092767",
-            emailAddress: "pnz.r00t@gmail.com",
-            residenteAddress: "Russia Penza",
-            careerObjective: "iOS developer",
-            totalYearsOfExperience: 4,
-            workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
-            skillsList: ["iOS developer", "Analytic manager"],
-            educationDetailList: [EducationDetailModel(classEducation: 4, passingYear: Date(), percentage: 99)],
-            projectDetailList: [
-                ProjectDetailModel(
-                    projectName: "Pregnancy Tracker",
-                    teamSize: 15,
-                    projectSummary: "1st in Pregnancy category",
-                    technologyUsed: "kean/Align, rxSwift",
-                    role: "iOS develoer"
-                )
-            ]
+    // FIXME: Delete after module creating
+    init() {
+        outResumeList.append(
+            ResumeModel(
+                resumeName: "test",
+                picture: UIImage(systemName: "search"),
+                mobileNumberString: "+79631092767",
+                emailAddress: "pnz.r00t@gmail.com",
+                residenteAddress: "Russia Penza",
+                careerObjective: "iOS developer",
+                totalYearsOfExperience: 4,
+                workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
+                skillsList: ["iOS developer", "Analytic manager"],
+                educationDetailList: [EducationDetailModel(classEducation: 4, passingYear: Date(), percentage: 99)],
+                projectDetailList: [
+                    ProjectDetailModel(
+                        projectName: "Pregnancy Tracker",
+                        teamSize: 15,
+                        projectSummary: "1st in Pregnancy category",
+                        technologyUsed: "kean/Align, rxSwift",
+                        role: "iOS develoer"
+                    )
+                ]
+            )
+        )
+
+        outResumeList.append(
+            ResumeModel(
+                resumeName: "test2",
+                picture: UIImage(systemName: "search"),
+                mobileNumberString: "+79631092767",
+                emailAddress: "pnz.r00t@gmail.com",
+                residenteAddress: "Russia Penza",
+                careerObjective: "iOS developer",
+                totalYearsOfExperience: 4,
+                workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
+                skillsList: ["iOS developer", "Analytic manager"],
+                educationDetailList: [EducationDetailModel(classEducation: 4, passingYear: Date(), percentage: 99)],
+                projectDetailList: [
+                    ProjectDetailModel(
+                        projectName: "Pregnancy Tracker",
+                        teamSize: 15,
+                        projectSummary: "1st in Pregnancy category",
+                        technologyUsed: "kean/Align, rxSwift",
+                        role: "iOS develoer"
+                    )
+                ]
+            )
+        )
+
+        outResumeList.append(
+            ResumeModel(
+                resumeName: "test3",
+                picture: UIImage(systemName: "search"),
+                mobileNumberString: "+79631092767",
+                emailAddress: "pnz.r00t@gmail.com",
+                residenteAddress: "Russia Penza",
+                careerObjective: "iOS developer",
+                totalYearsOfExperience: 4,
+                workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
+                skillsList: ["iOS developer", "Analytic manager"],
+                educationDetailList: [EducationDetailModel(classEducation: 4, passingYear: Date(), percentage: 99)],
+                projectDetailList: [
+                    ProjectDetailModel(
+                        projectName: "Pregnancy Tracker",
+                        teamSize: 15,
+                        projectSummary: "1st in Pregnancy category",
+                        technologyUsed: "kean/Align, rxSwift",
+                        role: "iOS develoer"
+                    )
+                ]
+            )
+        )
+
+        outResumeList.append(
+            ResumeModel(
+                resumeName: "test4",
+                picture: UIImage(systemName: "search"),
+                mobileNumberString: "+79631092767",
+                emailAddress: "pnz.r00t@gmail.com",
+                residenteAddress: "Russia Penza",
+                careerObjective: "iOS developer",
+                totalYearsOfExperience: 4,
+                workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
+                skillsList: ["iOS developer", "Analytic manager"],
+                educationDetailList: [EducationDetailModel(classEducation: 4, passingYear: Date(), percentage: 99)],
+                projectDetailList: [
+                    ProjectDetailModel(
+                        projectName: "Pregnancy Tracker",
+                        teamSize: 15,
+                        projectSummary: "1st in Pregnancy category",
+                        technologyUsed: "kean/Align, rxSwift",
+                        role: "iOS develoer"
+                    )
+                ]
+            )
         )
     }
-    
-    func addResume(_ resume: ResumeModel) {
+
+    func getResumeList() -> [ResumeModel] {
+        return outResumeList
     }
-    
+
+    func getResumeCount() -> Int {
+        return outResumeList.count
+    }
+
+    func getResume(index: Int) -> ResumeModel? {
+        return outResumeList[index]
+    }
+
+    func addResume(_ resume: ResumeModel) {
+        outResumeList.append(resume)
+    }
+
     func replaceResume(at index: Int, resume: ResumeModel) {
+        outResumeList[index] = resume
     }
 }

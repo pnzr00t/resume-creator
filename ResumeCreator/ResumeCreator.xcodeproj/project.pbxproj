@@ -143,7 +143,7 @@
 		77CC4E0F280755DF00CA6A08 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				77CC4E272807766C00CA6A08 /* ResumeEdeting */,
+				77CC4E272807766C00CA6A08 /* ResumeEditing */,
 				77CC4E1A2807683200CA6A08 /* ProjectDetail */,
 				77CC4E192807682700CA6A08 /* EducationDetail */,
 				77CC4E182807680E00CA6A08 /* WorkInfo */,
@@ -196,13 +196,13 @@
 			path = ProjectDetail;
 			sourceTree = "<group>";
 		};
-		77CC4E272807766C00CA6A08 /* ResumeEdeting */ = {
+		77CC4E272807766C00CA6A08 /* ResumeEditing */ = {
 			isa = PBXGroup;
 			children = (
 				77CC4E282807769100CA6A08 /* ResumeEditingViewController.swift */,
 				77CC4E2A2807769C00CA6A08 /* ResumeEditingCoordinator.swift */,
 			);
-			path = ResumeEdeting;
+			path = ResumeEditing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

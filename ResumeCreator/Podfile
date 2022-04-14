@@ -7,5 +7,5 @@ target 'ResumeCreator' do
 
   # Pods for ResumeCreator
   pod 'RealmSwift', '~>10'
-
+  pod 'SnapKit', '~> 5.0.0'
 end

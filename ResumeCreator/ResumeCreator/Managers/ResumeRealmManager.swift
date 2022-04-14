@@ -8,7 +8,6 @@
 import RealmSwift
 
 final class ResumeManager: ResumeManagerProtocol {
-
     enum Error: Swift.Error {
         case initializationError
         case storageError(underlyingError: Swift.Error)
@@ -75,6 +74,21 @@ final class ResumeManager: ResumeManagerProtocol {
         } catch {
             assertionFailure("ResumeManager: failed to replaceResume: \(error)")
         }
+    }
+
+    func getResumeList() -> [ResumeModel] {
+        do {
+            let instance = try self.realmInstance.get()
+            let resumeEntities = instance.objects(ResumeEntity.self)
+
+            return resumeEntities.compactMap { resumeEntity in
+                resumeEntity.model
+            }
+        } catch {
+            assertionFailure("ResumeManager: failed to replaceResume: \(error)")
+        }
+
+        return []
     }
 }
 
