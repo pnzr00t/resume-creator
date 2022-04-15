@@ -136,7 +136,7 @@ class ResumeMockService: ResumeServiceProtocol {
     }
 
     func removeObject(_ resume: ResumeModel) {
-        guard case let .existing(resumeID) = resume.id else { return }
+        guard case .existing = resume.id else { return }
 
         outResumeList.removeAll { resumeModel in
             resume.id == resumeModel.id ? true : false
