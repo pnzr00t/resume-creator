@@ -11,21 +11,30 @@ class ResumeListCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
+    private let dependencies: ResumeListViewController.Dependencies
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+
+        dependencies = ResumeListViewController.Dependencies(
+            viewModelFactory: ResumeListViewModelFactory(
+                dependencies: ResumeListViewModelFactory.Dependencies(resumeService: ResumeRealmService(realmFileName: "resume-data"))
+                // FIXME: MOCK - INFO. delete this code
+                //dependencies: ResumeListViewModelFactory.Dependencies(resumeService: ResumeMockService())
+            )
+        )
     }
 
     func start() {
-        let vc = ResumeListViewController()
+        let vc = ResumeListViewController(dependencies: dependencies)
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: false)
     }
 }
 
 extension ResumeListCoordinator: ResumeEditingRoute {
-    func resumeEditingShow() {
-        let childCoordinator = ResumeEditingCoordinator(navigationController: navigationController)
+    func resumeEditingShow(resume: ResumeModel) {
+        let childCoordinator = ResumeEditingCoordinator(navigationController: navigationController, resume: resume)
         childCoordinator.parentCoordinator = self
         childCoordinators.append(childCoordinator)
         childCoordinator.start()

@@ -9,17 +9,40 @@ import Foundation
 import UIKit
 
 struct ResumeModel {
+    enum Identifier: Hashable {
+        case new
+        case existing(UUID)
+    }
+
+    let id: Identifier
     let resumeName: String
     let picture: UIImage?
     let mobileNumberString: String
     let emailAddress: String
-    let residenteAddress: String
+    let residenceAddress: String
     let careerObjective: String
     let totalYearsOfExperience: Int
     let workSummaryList: [WorkInfoModel]
     let skillsList: [String]
     let educationDetailList: [EducationDetailModel]
     let projectDetailList: [ProjectDetailModel]
+
+    static func createNewEmptyResume() -> ResumeModel {
+        ResumeModel(
+            id: .new,
+            resumeName: "",
+            picture: nil,
+            mobileNumberString: "",
+            emailAddress: "",
+            residenceAddress: "",
+            careerObjective: "",
+            totalYearsOfExperience: 0,
+            workSummaryList: [],
+            skillsList: [],
+            educationDetailList: [],
+            projectDetailList: []
+        )
+    }
 }
 
 struct WorkInfoModel {

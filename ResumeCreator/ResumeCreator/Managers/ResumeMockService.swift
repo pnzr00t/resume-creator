@@ -9,18 +9,19 @@ import Foundation
 import UIKit
 
 
-class ResumeMockManager: ResumeManagerProtocol {
+class ResumeMockService: ResumeServiceProtocol {
     var outResumeList = [ResumeModel]()
     
     // FIXME: Delete after module creating
     init() {
         outResumeList.append(
             ResumeModel(
+                id: .existing(UUID()),
                 resumeName: "test",
                 picture: UIImage(systemName: "search"),
                 mobileNumberString: "+79631092767",
                 emailAddress: "pnz.r00t@gmail.com",
-                residenteAddress: "Russia Penza",
+                residenceAddress: "Russia Penza",
                 careerObjective: "iOS developer",
                 totalYearsOfExperience: 4,
                 workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
@@ -40,11 +41,12 @@ class ResumeMockManager: ResumeManagerProtocol {
 
         outResumeList.append(
             ResumeModel(
+                id: .existing(UUID()),
                 resumeName: "test2",
                 picture: UIImage(systemName: "search"),
                 mobileNumberString: "+79631092767",
                 emailAddress: "pnz.r00t@gmail.com",
-                residenteAddress: "Russia Penza",
+                residenceAddress: "Russia Penza",
                 careerObjective: "iOS developer",
                 totalYearsOfExperience: 4,
                 workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
@@ -64,11 +66,12 @@ class ResumeMockManager: ResumeManagerProtocol {
 
         outResumeList.append(
             ResumeModel(
+                id: .existing(UUID()),
                 resumeName: "test3",
                 picture: UIImage(systemName: "search"),
                 mobileNumberString: "+79631092767",
                 emailAddress: "pnz.r00t@gmail.com",
-                residenteAddress: "Russia Penza",
+                residenceAddress: "Russia Penza",
                 careerObjective: "iOS developer",
                 totalYearsOfExperience: 4,
                 workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
@@ -88,11 +91,12 @@ class ResumeMockManager: ResumeManagerProtocol {
 
         outResumeList.append(
             ResumeModel(
+                id: .existing(UUID()),
                 resumeName: "test4",
                 picture: UIImage(systemName: "search"),
                 mobileNumberString: "+79631092767",
                 emailAddress: "pnz.r00t@gmail.com",
-                residenteAddress: "Russia Penza",
+                residenceAddress: "Russia Penza",
                 careerObjective: "iOS developer",
                 totalYearsOfExperience: 4,
                 workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
@@ -129,5 +133,13 @@ class ResumeMockManager: ResumeManagerProtocol {
 
     func replaceResume(at index: Int, resume: ResumeModel) {
         outResumeList[index] = resume
+    }
+
+    func removeObject(_ resume: ResumeModel) {
+        guard case let .existing(resumeID) = resume.id else { return }
+
+        outResumeList.removeAll { resumeModel in
+            resume.id == resumeModel.id ? true : false
+        }
     }
 }

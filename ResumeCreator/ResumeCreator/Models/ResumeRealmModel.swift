@@ -8,11 +8,12 @@
 import RealmSwift
 
 final class ResumeEntity: Object {
+    @Persisted(primaryKey: true) var id: UUID = UUID()
     @Persisted var resumeName: String
     @Persisted var picture: Data?
     @Persisted var mobileNumberString: String
     @Persisted var emailAddress: String
-    @Persisted var residenteAddress: String
+    @Persisted var residenceAddress: String
     @Persisted var careerObjective: String
     @Persisted var totalYearsOfExperience: Int
     @Persisted var workSummaryList: List<WorkInfoEntity>
@@ -47,11 +48,12 @@ final class ResumeEntity: Object {
         }
 
         return ResumeModel(
+            id: .existing(id),
             resumeName: resumeName,
             picture: resumePicture,
             mobileNumberString: mobileNumberString,
             emailAddress: emailAddress,
-            residenteAddress: residenteAddress,
+            residenceAddress: residenceAddress,
             careerObjective: careerObjective,
             totalYearsOfExperience: totalYearsOfExperience,
             workSummaryList: workSummaryList,
@@ -66,7 +68,7 @@ final class ResumeEntity: Object {
         picture = model.picture?.pngData()
         mobileNumberString = model.mobileNumberString
         emailAddress = model.emailAddress
-        residenteAddress = model.residenteAddress
+        residenceAddress = model.residenceAddress
         careerObjective = model.careerObjective
         totalYearsOfExperience = model.totalYearsOfExperience
 

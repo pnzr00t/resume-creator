@@ -12,9 +12,11 @@ class ResumeEditingCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
+    private let resume: ResumeModel
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, resume: ResumeModel) {
         self.navigationController = navigationController
+        self.resume = resume
     }
 
     func start() {
@@ -52,5 +54,5 @@ extension ResumeEditingCoordinator: ProjectDetailAddingRoute {
 }
 
 protocol ResumeEditingRoute: AnyObject {
-    func resumeEditingShow()
+    func resumeEditingShow(resume: ResumeModel)
 }
