@@ -1,5 +1,5 @@
 //
-//  ResumeRealmManager.swift
+//  ResumeRealmService.swift
 //  ResumeCreator
 //
 //  Created by Oleg Pustoshkin on 13.04.2022.
@@ -7,8 +7,7 @@
 
 import RealmSwift
 
-final class ResumeManager: ResumeManagerProtocol {
-
+final class ResumeRealmService: ResumeServiceProtocol {
     enum Error: Swift.Error {
         case initializationError
         case storageError(underlyingError: Swift.Error)
@@ -76,9 +75,39 @@ final class ResumeManager: ResumeManagerProtocol {
             assertionFailure("ResumeManager: failed to replaceResume: \(error)")
         }
     }
+
+    func getResumeList() -> [ResumeModel] {
+        do {
+            let instance = try self.realmInstance.get()
+            let resumeEntities = instance.objects(ResumeEntity.self)
+
+            return resumeEntities.compactMap { resumeEntity in
+                resumeEntity.model
+            }
+        } catch {
+            assertionFailure("ResumeManager: failed to replaceResume: \(error)")
+        }
+
+        return []
+    }
+
+    func removeObject(_ resume: ResumeModel) {
+        guard case let .existing(resumeID) = resume.id else { return }
+
+        do {
+            let instance = try self.realmInstance.get()
+            if let resumeEntity = instance.objects(ResumeEntity.self).filter("id = %@", resumeID).first {
+                try instance.write {
+                    instance.delete(resumeEntity)
+                }
+            }
+        } catch {
+            assertionFailure("ResumeManager: failed to replaceResume: \(error)")
+        }
+    }
 }
 
-extension ResumeManager {
+extension ResumeRealmService {
     static func createRealmConfiguration(fileName: String) -> Realm.Configuration {
         var config = Realm.Configuration(
             schemaVersion: 1,
