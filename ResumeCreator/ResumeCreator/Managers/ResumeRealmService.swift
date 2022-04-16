@@ -49,17 +49,20 @@ final class ResumeRealmService: ResumeServiceProtocol {
         }
     }
 
-    func addResume(_ resume: ResumeModel) {
+    func addResume(_ resume: ResumeModel) -> ResumeModel? {
         do {
             let instance = try self.realmInstance.get()
+            let entity = ResumeEntity()
+            entity.update(from: resume)
             try instance.write {
-                let entity = ResumeEntity()
-                entity.update(from: resume)
                 instance.add(entity, update: .modified)
             }
+            return entity.model
         } catch {
             assertionFailure("ResumeManager: failed to addResume: \(error)")
         }
+
+        return nil
     }
 
     func replaceResume(at index: Int, resume: ResumeModel) {
@@ -102,8 +105,30 @@ final class ResumeRealmService: ResumeServiceProtocol {
                 }
             }
         } catch {
-            assertionFailure("ResumeManager: failed to replaceResume: \(error)")
+            assertionFailure("ResumeManager: failed to removeObject: \(error)")
         }
+    }
+    
+    func editResume(_ resume: ResumeModel) -> ResumeModel? {
+        if resume.id == .new {
+            return addResume(resume)
+        }
+
+        do {
+            guard case let .existing(resumeID) = resume.id else { return nil }
+
+            let instance = try self.realmInstance.get()
+            if let resumeEntity = instance.objects(ResumeEntity.self).filter("id = %@", resumeID).first {
+                try instance.write {
+                    resumeEntity.update(from: resume)
+                }
+                return resumeEntity.model
+            }
+        } catch {
+            assertionFailure("ResumeManager: failed to editResume: \(error)")
+        }
+
+        return nil
     }
 }
 

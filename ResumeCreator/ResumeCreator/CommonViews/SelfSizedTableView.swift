@@ -39,16 +39,7 @@ final class SelfSizedTableView: UITableView {
 }
 
 extension Reactive where Base: SelfSizedTableView {
-    
     var contentHeight: ControlEvent<CGFloat> {
         ControlEvent(events: base.heightRelay)
-    }
-}
-
-extension Reactive where Base: UIScrollView {
-    var contentSize: ControlEvent<CGSize> {
-        let events = observe(CGSize.self, #keyPath(UIScrollView.contentSize))
-            .compactMap { $0 }
-        return ControlEvent(events: events)
     }
 }

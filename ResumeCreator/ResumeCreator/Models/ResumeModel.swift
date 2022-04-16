@@ -14,18 +14,18 @@ struct ResumeModel {
         case existing(UUID)
     }
 
-    let id: Identifier
-    let resumeName: String
-    let picture: UIImage?
-    let mobileNumberString: String
-    let emailAddress: String
-    let residenceAddress: String
-    let careerObjective: String
-    let totalYearsOfExperience: Int
-    let workSummaryList: [WorkInfoModel]
-    let skillsList: [String]
-    let educationDetailList: [EducationDetailModel]
-    let projectDetailList: [ProjectDetailModel]
+    var id: Identifier
+    var resumeName: String
+    var picture: UIImage?
+    var mobileNumberString: String
+    var emailAddress: String
+    var residenceAddress: String
+    var careerObjective: String
+    var totalYearsOfExperience: Int
+    var workSummaryList: [WorkInfoModel]
+    var skillsList: [String]
+    var educationDetailList: [EducationDetailModel]
+    var projectDetailList: [ProjectDetailModel]
 
     static func createNewEmptyResume() -> ResumeModel {
         ResumeModel(

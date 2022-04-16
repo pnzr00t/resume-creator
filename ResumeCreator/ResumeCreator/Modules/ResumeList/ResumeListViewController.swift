@@ -47,7 +47,7 @@ struct ResumeListViewModelFactory {
             .do(onNext: { resumeToDelete in
                 dependencies.resumeService.removeObject(resumeToDelete)
             })
-                .map { _ in return Void() }
+            .map { _ in return Void() }
         
         let resumeList = Signal.merge(input.viewWillAppear, deleteResume)
             .flatMapLatest {
@@ -70,14 +70,15 @@ class ResumeListViewController: UIViewController {
     
     private let dependencies: Dependencies
     weak var coordinator: ResumeEditingRoute?
-    
-    private lazy var tableView = UITableView()
+
     private lazy var barButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
+
+    private lazy var tableView = UITableView()
     private let cellReuseIdentifier = "cell"
     private var resumeList = [ResumeModel]()
-    
     private let selectResumePublisher = PublishRelay<ResumeModel>()
     private let deleteResumePublisher = PublishRelay<ResumeModel>()
+
     private let disposeBag = DisposeBag()
     
     init(dependencies: Dependencies) {
@@ -94,7 +95,10 @@ class ResumeListViewController: UIViewController {
         
         resumeList = ResumeMockService().getResumeList()
         commonInit()
-        
+        setupBindings()
+    }
+
+    private func setupBindings() {
         let viewModel = dependencies.viewModelFactory.createViewModel(
             ResumeListViewModelFactory.Input(
                 viewWillAppear: rx.viewWillAppear.asSignal(),
@@ -103,7 +107,7 @@ class ResumeListViewController: UIViewController {
                 deleteResume: deleteResumePublisher.asSignal()
             )
         )
-        
+
         viewModel.cells.asDriver(onErrorJustReturn: [])
             .drive(onNext: { [weak self] resumeList in
                 guard let self = self else { return }
@@ -112,7 +116,7 @@ class ResumeListViewController: UIViewController {
                 self.tableView.reloadData()
             })
             .disposed(by: disposeBag)
-        
+
         viewModel.editResume.asObservable()
             .subscribe(onNext: { [weak self] resumeModel in
                 guard let self = self else { return }
@@ -179,29 +183,4 @@ extension ResumeListViewController: UITableViewDataSource {
         
         return reusableCell
     }
-}
-
-
-extension Reactive where Base: UIViewController {
-    
-    private func controlEvent(for selector: Selector) -> ControlEvent<Void> {
-        return ControlEvent(events: sentMessage(selector).map { _ in })
-    }
-    
-    var viewWillAppear: ControlEvent<Void> {
-        return controlEvent(for: #selector(UIViewController.viewWillAppear))
-    }
-    
-    var viewDidAppear: ControlEvent<Void> {
-        return controlEvent(for: #selector(UIViewController.viewDidAppear))
-    }
-    
-    var viewWillDisappear: ControlEvent<Void> {
-        return controlEvent(for: #selector(UIViewController.viewWillDisappear))
-    }
-    
-    var viewDidDisappear: ControlEvent<Void> {
-        return controlEvent(for: #selector(UIViewController.viewDidDisappear))
-    }
-    
 }
