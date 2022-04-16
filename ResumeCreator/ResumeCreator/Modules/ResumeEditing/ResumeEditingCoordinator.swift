@@ -12,17 +12,17 @@ class ResumeEditingCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
-    private let resume: ResumeModel
+    private var dependencies: ResumeEditingViewController.Dependencies
 
-    init(navigationController: UINavigationController, resume: ResumeModel) {
+    init(navigationController: UINavigationController, dependencies: ResumeEditingViewController.Dependencies) {
         self.navigationController = navigationController
-        self.resume = resume
+        self.dependencies = dependencies
     }
 
     func start() {
-        let vc = ResumeEditingViewController()
+        let vc = ResumeEditingViewController(dependencies: self.dependencies)
         vc.coordinator = self
-        navigationController.pushViewController(vc, animated: false)
+        navigationController.pushViewController(vc, animated: true)
     }
 }
 

@@ -34,7 +34,16 @@ class ResumeListCoordinator: Coordinator {
 
 extension ResumeListCoordinator: ResumeEditingRoute {
     func resumeEditingShow(resume: ResumeModel) {
-        let childCoordinator = ResumeEditingCoordinator(navigationController: navigationController, resume: resume)
+        let resumeEditingDependencies =  ResumeEditingViewController.Dependencies(
+            viewModelFactory: ResumeEditingViewModelFactory(
+                dependencies: ResumeEditingViewModelFactory.Dependencies(
+                    editingResume: resume,
+                    resumeService: dependencies.viewModelFactory.dependencies.resumeService
+                )
+            )
+        )
+
+        let childCoordinator = ResumeEditingCoordinator(navigationController: navigationController, dependencies: resumeEditingDependencies)
         childCoordinator.parentCoordinator = self
         childCoordinators.append(childCoordinator)
         childCoordinator.start()

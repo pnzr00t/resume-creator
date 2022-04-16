@@ -95,14 +95,10 @@ class ResumeListViewController: UIViewController {
         resumeList = ResumeMockService().getResumeList()
         commonInit()
         
-        barButtonItem.rx.tap.debug("DEBUG-barButtonItem", trimOutput: false)
-            .subscribe(onNext: { print(123) })
-            .disposed(by: disposeBag)
-        
         let viewModel = dependencies.viewModelFactory.createViewModel(
             ResumeListViewModelFactory.Input(
                 viewWillAppear: rx.viewWillAppear.asSignal(),
-                addButtonPressed: barButtonItem.rx.tap.asSignal().debug("DEBUG", trimOutput: false),
+                addButtonPressed: barButtonItem.rx.tap.asSignal(),
                 selectedResume: selectResumePublisher.asSignal(),
                 deleteResume: deleteResumePublisher.asSignal()
             )
