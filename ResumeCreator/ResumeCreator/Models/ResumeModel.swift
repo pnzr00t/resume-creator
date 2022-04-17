@@ -48,12 +48,20 @@ struct ResumeModel {
 struct WorkInfoModel {
     let companyName: String
     let duration: Int
+
+    static func createNewEmptyWorkInfo() -> WorkInfoModel {
+        WorkInfoModel(companyName: "", duration: 0)
+    }
 }
 
 struct EducationDetailModel {
     let classEducation: Int
     let passingYear: Date
     let percentage: Int
+
+    static func createNewEmptyEducationDetail() -> EducationDetailModel {
+        EducationDetailModel(classEducation: 0, passingYear: .now, percentage: 0)
+    }
 }
 
 struct ProjectDetailModel {
@@ -62,4 +70,8 @@ struct ProjectDetailModel {
     let projectSummary: String
     let technologyUsed: String
     let role: String
+
+    static func createNewEmptyProjectDetail() -> ProjectDetailModel {
+        ProjectDetailModel(projectName: "", teamSize: 0, projectSummary: "", technologyUsed: "", role: "")
+    }
 }

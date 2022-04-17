@@ -36,15 +36,19 @@ struct ResumeEditingViewModelFactory {
         let residenceAddress: Driver<String>
         let careerObjective: Driver<String>
         let totalYearsOfExperience: Driver<Int>
+
         let addSkill: Signal<Void>
         let selectSkill: Signal<IndexPath>
         let deleteSkill: Signal<IndexPath>
+
         let addWorkInfo: Signal<Void>
         let selectWorkInfo: Signal<IndexPath>
         let deleteWorkInfo: Signal<IndexPath>
+
         let addEducationDetail: Signal<Void>
         let selectEducationDetail: Signal<IndexPath>
         let deleteEducationDetail: Signal<IndexPath>
+
         let addProjectDetail: Signal<Void>
         let selectProjectDetail: Signal<IndexPath>
         let deleteProjectDetail: Signal<IndexPath>
@@ -57,10 +61,19 @@ struct ResumeEditingViewModelFactory {
         let emailAddress: Driver<String>
         let residenceAddress: Driver<String>
         let careerObjective: Driver<String>
+
         let skillsList: Signal<[String]>
+        let skillEdit: Signal<(String, (String) -> Void)>
+
         let workInfoList: Signal<[WorkInfoModel]>
+        let workInfoEdit: Signal<(WorkInfoModel, (WorkInfoModel) -> Void)>
+
         let educationDetailList: Signal<[EducationDetailModel]>
+        let educationDetailEdit: Signal<(EducationDetailModel, (EducationDetailModel) -> Void)>
+
         let projectDetailList: Signal<[ProjectDetailModel]>
+        let projectDetailEdit: Signal<(ProjectDetailModel, (ProjectDetailModel) -> Void)>
+
         let allFieldValid: Driver<Bool>
         let totalYearsOfExperience: Driver<Int>
     }
@@ -134,6 +147,26 @@ struct ResumeEditingViewModelFactory {
                 Observable.just(resumeState.state.skillsList).asSignal(onErrorJustReturn: [])
             }
 
+        let addSkillChain = input.addSkill.map { _ -> (String, (String) -> Void) in
+            return (
+                "",
+                { newSkill in
+                    resumeState.state.skillsList.append(newSkill)
+                }
+            )
+        }
+        let editSkillChain = input.selectSkill.map { indexPath -> (String, (String) -> Void) in
+            let selectedSkill = resumeState.state.skillsList[indexPath.row]
+            return (
+                selectedSkill,
+                { editedSkill in
+                    resumeState.state.skillsList[indexPath.row] = editedSkill
+                }
+            )
+        }
+        let skillEdit = Signal.merge(addSkillChain, editSkillChain)
+            .debug(":DEUBUG: skillEdit")
+        
         // Work Info
         let deleteWorkInfo = input.deleteWorkInfo
             .do(onNext: { indexPath in
@@ -145,6 +178,26 @@ struct ResumeEditingViewModelFactory {
             .flatMapLatest {
                 Observable.just(resumeState.state.workSummaryList).asSignal(onErrorJustReturn: [])
             }
+
+        let addWorkInfoChain = input.addWorkInfo.map { _ -> (WorkInfoModel, (WorkInfoModel) -> Void) in
+            return (
+                WorkInfoModel.createNewEmptyWorkInfo(),
+                { newWorkInfo in
+                    resumeState.state.workSummaryList.append(newWorkInfo)
+                }
+            )
+        }
+        let editWorkInfoChain = input.selectWorkInfo.map { indexPath -> (WorkInfoModel, (WorkInfoModel) -> Void) in
+            let selectedWorkInfo = resumeState.state.workSummaryList[indexPath.row]
+            return (
+                selectedWorkInfo,
+                { editedWorkInfo in
+                    resumeState.state.workSummaryList[indexPath.row] = editedWorkInfo
+                }
+            )
+        }
+        let workInfoEdit = Signal.merge(addWorkInfoChain, editWorkInfoChain)
+            .debug(":DEUBUG: workInfoEdit")
 
         // Education list
         let deleteEducationList = input.deleteEducationDetail
@@ -158,6 +211,26 @@ struct ResumeEditingViewModelFactory {
                 Observable.just(resumeState.state.educationDetailList).asSignal(onErrorJustReturn: [])
             }
 
+        let addEducationDetailChain = input.addEducationDetail.map { _ -> (EducationDetailModel, (EducationDetailModel) -> Void) in
+            return (
+                EducationDetailModel.createNewEmptyEducationDetail(),
+                { newEducationDetail in
+                    resumeState.state.educationDetailList.append(newEducationDetail)
+                }
+            )
+        }
+        let editEducationDetailChain = input.selectWorkInfo.map { indexPath -> (EducationDetailModel, (EducationDetailModel) -> Void) in
+            let selectedEducationDetail = resumeState.state.educationDetailList[indexPath.row]
+            return (
+                selectedEducationDetail,
+                { editedEducationDetail in
+                    resumeState.state.educationDetailList[indexPath.row] = editedEducationDetail
+                }
+            )
+        }
+        let educationDetailEdit = Signal.merge(addEducationDetailChain, editEducationDetailChain)
+            .debug(":DEUBUG: educationDetailEdit")
+
         // Project Detail
         let deleteProjectDetail = input.deleteEducationDetail
             .do(onNext: { indexPath in
@@ -169,7 +242,26 @@ struct ResumeEditingViewModelFactory {
             .flatMapLatest {
                 Observable.just(resumeState.state.projectDetailList).asSignal(onErrorJustReturn: [])
             }
-
+        
+        let addProjectDetailChain = input.addProjectDetail.map { _ -> (ProjectDetailModel, (ProjectDetailModel) -> Void) in
+            return (
+                ProjectDetailModel.createNewEmptyProjectDetail(),
+                { newProjectDetail in
+                    resumeState.state.projectDetailList.append(newProjectDetail)
+                }
+            )
+        }
+        let editProjectDetailChain = input.selectWorkInfo.map { indexPath -> (ProjectDetailModel, (ProjectDetailModel) -> Void) in
+            let selectedProjectDetail = resumeState.state.projectDetailList[indexPath.row]
+            return (
+                selectedProjectDetail,
+                { editedProjectDetail in
+                    resumeState.state.projectDetailList[indexPath.row] = editedProjectDetail
+                }
+            )
+        }
+        let projectDetailEdit = Signal.merge(addProjectDetailChain, editProjectDetailChain)
+            .debug(":DEUBUG: projectDetailEdit")
 
         let resumeNameValid = input.resumeNameText.map({ $0.count > 0 }).asSignal(onErrorJustReturn: true)
         let allFieldValid = Signal.merge(resumeNameValid)
@@ -183,9 +275,13 @@ struct ResumeEditingViewModelFactory {
             residenceAddress: residenceAddress,
             careerObjective: careerObjective,
             skillsList: skillsList,
+            skillEdit: skillEdit,
             workInfoList: workInfoList,
+            workInfoEdit: workInfoEdit,
             educationDetailList: educationDetailList,
+            educationDetailEdit: educationDetailEdit,
             projectDetailList: projectDetailList,
+            projectDetailEdit: projectDetailEdit,
             allFieldValid: allFieldValid.asDriver(onErrorJustReturn: true),
             totalYearsOfExperience: totalYearsOfExperience
         )
@@ -436,11 +532,11 @@ class ResumeEditingViewController: UIViewController {
         self.dependencies = dependencies
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -452,7 +548,10 @@ class ResumeEditingViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        coordinator?.viewDidDisappear()
+
+        if self.isMovingFromParent {
+            coordinator?.viewDidDisappear()
+        }
     }
     
     private func commonInit() {
@@ -772,6 +871,7 @@ class ResumeEditingViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
+        // Skills
         viewModel.skillsList.asObservable()
             .subscribe(onNext: { [weak self] skillsList in
                 guard let self = self else { return }
@@ -780,6 +880,15 @@ class ResumeEditingViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
+        viewModel.skillEdit.asObservable()
+            .subscribe(onNext: { [weak self] editSkillTuple in
+                guard let self = self else { return }
+
+                // TODO: !!!!ALERT HERE!!!!
+            })
+            .disposed(by: disposeBag)
+
+        // WorkInfo
         viewModel.workInfoList.asObservable()
             .subscribe(onNext: { [weak self] workInfoList in
                 guard let self = self else { return }
@@ -788,6 +897,15 @@ class ResumeEditingViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
+        viewModel.workInfoEdit.asObservable()
+            .subscribe(onNext: { [weak self] editWorkInfoTuple in
+                guard let self = self else { return }
+
+                self.coordinator?.workInfoAdding()
+            })
+            .disposed(by: disposeBag)
+
+        // EducationDetail
         viewModel.educationDetailList.asObservable()
             .subscribe(onNext: { [weak self] educationDetailList in
                 guard let self = self else { return }
@@ -796,11 +914,28 @@ class ResumeEditingViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
+        viewModel.educationDetailEdit.asObservable()
+            .subscribe(onNext: { [weak self] editEducationDetailTuple in
+                guard let self = self else { return }
+
+                self.coordinator?.educationDetailAdding()
+            })
+            .disposed(by: disposeBag)
+
+        // Project detail
         viewModel.projectDetailList.asObservable()
             .subscribe(onNext: { [weak self] projectDetailList in
                 guard let self = self else { return }
 
                 self.projectDetailList = projectDetailList
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.projectDetailEdit.asObservable()
+            .subscribe(onNext: { [weak self] editEducationDetailTuple in
+                guard let self = self else { return }
+
+                self.coordinator?.projectDetailAdding()
             })
             .disposed(by: disposeBag)
 
@@ -831,6 +966,24 @@ extension ResumeEditingViewController: UIImagePickerControllerDelegate, UINaviga
         picker.delegate = self
         present(picker, animated: true)
     }
+    
+    /*func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        // Read the view controller we’re moving from.
+        guard let fromViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {
+            return
+        }
+
+        // Check whether our view controller array already contains that view controller. If it does it means we’re pushing a different view controller on top rather than popping it, so exit.
+        if navigationController.viewControllers.contains(fromViewController) {
+            return
+        }
+
+        // We’re still here – it means we’re popping the view controller, so we can check whether it’s a buy view controller
+        if let buyViewController = fromViewController as? BuyViewController {
+            // We're popping a buy view controller; end its coordinator
+            childDidFinish(buyViewController.coordinator)
+        }
+    }*/
 }
 
 extension ResumeEditingViewController: UITableViewDelegate {

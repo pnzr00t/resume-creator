@@ -16,4 +16,12 @@ class ProjectDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .green
     }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        if self.isMovingFromParent {
+            coordinator?.viewDidDisappear()
+        }
+    }
 }
