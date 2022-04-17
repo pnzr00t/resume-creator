@@ -19,6 +19,7 @@ struct ResumeEditingViewModelFactory {
 
     var dependencies: Dependencies
     private var resumeState: StateWrapper<ResumeModel>
+    private var skillsUpdatePublisher = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
 
     init(dependencies: Dependencies) {
@@ -142,7 +143,7 @@ struct ResumeEditingViewModelFactory {
             })
             .map { _ in return Void() }
 
-        let skillsList = Signal.merge(input.viewWillAppear, deleteSkill)
+        let skillsList = Signal.merge(input.viewWillAppear, deleteSkill, skillsUpdatePublisher.asSignal())
             .flatMapLatest {
                 Observable.just(resumeState.state.skillsList).asSignal(onErrorJustReturn: [])
             }
@@ -152,6 +153,7 @@ struct ResumeEditingViewModelFactory {
                 "",
                 { newSkill in
                     resumeState.state.skillsList.append(newSkill)
+                    skillsUpdatePublisher.accept(Void())
                 }
             )
         }
@@ -161,6 +163,7 @@ struct ResumeEditingViewModelFactory {
                 selectedSkill,
                 { editedSkill in
                     resumeState.state.skillsList[indexPath.row] = editedSkill
+                    skillsUpdatePublisher.accept(Void())
                 }
             )
         }
@@ -897,14 +900,22 @@ class ResumeEditingViewController: UIViewController {
                 guard let self = self else { return }
 
                 self.skillsList = skillsList
+                self.skillsTableView.reloadData()
             })
             .disposed(by: disposeBag)
 
+        // TODO: Better make something like skills cloud
         viewModel.skillEdit.asObservable()
             .subscribe(onNext: { [weak self] editSkillTuple in
                 guard let self = self else { return }
 
-                // TODO: !!!!ALERT HERE!!!!
+                self.alertWithTextField(
+                    title: "Skills",
+                    message: "Change or write new skill",
+                    placeholder: "Enter new skill...",
+                    defaultText: editSkillTuple.0,
+                    completion: editSkillTuple.1
+                )
             })
             .disposed(by: disposeBag)
 
@@ -914,6 +925,7 @@ class ResumeEditingViewController: UIViewController {
                 guard let self = self else { return }
 
                 self.workInfoList = workInfoList
+                self.workSummaryTableView.reloadData()
             })
             .disposed(by: disposeBag)
 
@@ -931,6 +943,7 @@ class ResumeEditingViewController: UIViewController {
                 guard let self = self else { return }
 
                 self.educationDetailList = educationDetailList
+                self.educationDetailTableView.reloadData()
             })
             .disposed(by: disposeBag)
 
@@ -948,6 +961,7 @@ class ResumeEditingViewController: UIViewController {
                 guard let self = self else { return }
 
                 self.projectDetailList = projectDetailList
+                self.projectDetailTableView.reloadData()
             })
             .disposed(by: disposeBag)
 
@@ -968,6 +982,27 @@ class ResumeEditingViewController: UIViewController {
                 self.showImagePicker()
             })
             .disposed(by: disposeBag)
+    }
+}
+
+extension ResumeEditingViewController {
+    public func alertWithTextField(title: String, message: String, placeholder: String, defaultText: String?, completion: @escaping ((String) -> Void)) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addTextField() { newTextField in
+            newTextField.placeholder = placeholder
+            newTextField.text = defaultText
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in })
+        alert.addAction(UIAlertAction(title: "Change", style: .default) { action in
+            if
+                let textFields = alert.textFields,
+                let firstTextField = textFields.first,
+                let result = firstTextField.text
+            {
+                completion(result)
+            }
+        })
+        navigationController?.present(alert, animated: true)
     }
 }
 
