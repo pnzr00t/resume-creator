@@ -46,8 +46,8 @@ struct ResumeModel {
 }
 
 struct WorkInfoModel {
-    let companyName: String
-    let duration: Int
+    var companyName: String
+    var duration: Int
 
     static func createNewEmptyWorkInfo() -> WorkInfoModel {
         WorkInfoModel(companyName: "", duration: 0)
