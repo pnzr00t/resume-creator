@@ -718,11 +718,31 @@ class ResumeEditingViewController: UIViewController {
             make.leading.equalToSuperview().inset(Constants.leadingInset)
             make.trailing.equalToSuperview().inset(Constants.trailingInset)
         }
+        
+        // Education Detail - label + add button + tableview
+        contentView.addSubview(educationDetailLabel)
+        educationDetailLabel.snp.makeConstraints { make in
+            make.top.equalTo(skillsTableView.snp.bottom).offset(Constants.moduleOffset)
+            make.leading.equalToSuperview().inset(Constants.leadingInset)
+        }
+        
+        contentView.addSubview(educationDetailAddButton)
+        educationDetailAddButton.snp.makeConstraints { make in
+            make.centerY.equalTo(educationDetailLabel.snp.centerY)
+            make.leading.equalTo(educationDetailLabel.snp.trailing).offset(Constants.labelToAddImageOffset)
+        }
+        
+        contentView.addSubview(educationDetailTableView)
+        educationDetailTableView.snp.makeConstraints { make in
+            make.top.equalTo(educationDetailAddButton.snp.bottom).offset(Constants.labelToTextOffset)
+            make.leading.equalToSuperview().inset(Constants.leadingInset)
+            make.trailing.equalToSuperview().inset(Constants.trailingInset)
+        }
 
-        // educationDetail - label + add button + tableview
+        // Project Detail - label + add button + tableview
         contentView.addSubview(projectDetailLabel)
         projectDetailLabel.snp.makeConstraints { make in
-            make.top.equalTo(skillsTableView.snp.bottom).offset(Constants.moduleOffset)
+            make.top.equalTo(educationDetailTableView.snp.bottom).offset(Constants.moduleOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
         }
         
@@ -901,7 +921,7 @@ class ResumeEditingViewController: UIViewController {
             .subscribe(onNext: { [weak self] editWorkInfoTuple in
                 guard let self = self else { return }
 
-                self.coordinator?.workInfoAdding()
+                self.coordinator?.workInfoAdding(workInfoEditing: editWorkInfoTuple.0, successCompletion: editWorkInfoTuple.1)
             })
             .disposed(by: disposeBag)
 
@@ -918,7 +938,7 @@ class ResumeEditingViewController: UIViewController {
             .subscribe(onNext: { [weak self] editEducationDetailTuple in
                 guard let self = self else { return }
 
-                self.coordinator?.educationDetailAdding()
+                self.coordinator?.educationDetailAdding(educationDetailEditing: editEducationDetailTuple.0, successCompletion: editEducationDetailTuple.1)
             })
             .disposed(by: disposeBag)
 
@@ -935,7 +955,7 @@ class ResumeEditingViewController: UIViewController {
             .subscribe(onNext: { [weak self] editEducationDetailTuple in
                 guard let self = self else { return }
 
-                self.coordinator?.projectDetailAdding()
+                self.coordinator?.projectDetailAdding(projectDetailEditing: editEducationDetailTuple.0, successCompletion: editEducationDetailTuple.1)
             })
             .disposed(by: disposeBag)
 

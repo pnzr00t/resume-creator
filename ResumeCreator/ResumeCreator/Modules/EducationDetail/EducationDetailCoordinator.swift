@@ -12,18 +12,21 @@ class EducationDetailCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
+    private var dependencies: EducationDetailViewController.Dependencies
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, dependencies: EducationDetailViewController.Dependencies) {
         self.navigationController = navigationController
+        self.dependencies = dependencies
     }
 
+
     func start() {
-        let vc = EducationDetailViewController()
+        let vc = EducationDetailViewController(dependencies: dependencies)
         vc.coordinator = self
-        navigationController.pushViewController(vc, animated: false)
+        navigationController.pushViewController(vc, animated: true)
     }
 }
 
 protocol EducationDetailAddingRoute: AnyObject {
-    func educationDetailAdding()
+    func educationDetailAdding(educationDetailEditing: EducationDetailModel, successCompletion: @escaping ((EducationDetailModel) -> Void))
 }
