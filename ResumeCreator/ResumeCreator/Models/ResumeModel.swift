@@ -46,8 +46,8 @@ struct ResumeModel {
 }
 
 struct WorkInfoModel {
-    let companyName: String
-    let duration: Int
+    var companyName: String
+    var duration: Int
 
     static func createNewEmptyWorkInfo() -> WorkInfoModel {
         WorkInfoModel(companyName: "", duration: 0)
@@ -55,9 +55,9 @@ struct WorkInfoModel {
 }
 
 struct EducationDetailModel {
-    let classEducation: Int
-    let passingYear: Date
-    let percentage: Int
+    var classEducation: Int
+    var passingYear: Date
+    var percentage: Int
 
     static func createNewEmptyEducationDetail() -> EducationDetailModel {
         EducationDetailModel(classEducation: 0, passingYear: .now, percentage: 0)
