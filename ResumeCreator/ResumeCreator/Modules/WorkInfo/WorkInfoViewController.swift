@@ -62,7 +62,7 @@ struct WorkInfoViewModelFactory {
             .startWith(false)
 
         return ViewModel(
-            companyNameText: companyNameText.debug(":DEBUG:"),
+            companyNameText: companyNameText,
             allFieldValid: allFieldValid.asDriver(onErrorJustReturn: true),
             durationYearsOfExperience: durationYearsOfExperience
         )
@@ -218,13 +218,6 @@ class WorkInfoViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
-        /*viewModel.companyNameText
-            .drive(onNext: { [weak self] companyName in
-                guard let self = self else { return }
-
-                self.companyNameTextField.text = companyName
-            })
-            .disposed(by: disposeBag)*/
         viewModel.companyNameText.asObservable()
                 .subscribe(onNext: { [weak self] companyName in
                     guard let self = self else { return }
