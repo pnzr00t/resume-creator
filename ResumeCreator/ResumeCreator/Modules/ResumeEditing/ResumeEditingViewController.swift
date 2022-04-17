@@ -219,7 +219,7 @@ struct ResumeEditingViewModelFactory {
                 }
             )
         }
-        let editEducationDetailChain = input.selectWorkInfo.map { indexPath -> (EducationDetailModel, (EducationDetailModel) -> Void) in
+        let editEducationDetailChain = input.selectEducationDetail.map { indexPath -> (EducationDetailModel, (EducationDetailModel) -> Void) in
             let selectedEducationDetail = resumeState.state.educationDetailList[indexPath.row]
             return (
                 selectedEducationDetail,
@@ -251,7 +251,7 @@ struct ResumeEditingViewModelFactory {
                 }
             )
         }
-        let editProjectDetailChain = input.selectWorkInfo.map { indexPath -> (ProjectDetailModel, (ProjectDetailModel) -> Void) in
+        let editProjectDetailChain = input.selectProjectDetail.map { indexPath -> (ProjectDetailModel, (ProjectDetailModel) -> Void) in
             let selectedProjectDetail = resumeState.state.projectDetailList[indexPath.row]
             return (
                 selectedProjectDetail,
@@ -1008,24 +1008,106 @@ extension ResumeEditingViewController: UIImagePickerControllerDelegate, UINaviga
 
 extension ResumeEditingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView === workSummaryTableView {
+            selectWorkSummaryPublisher.accept(indexPath)
+        }
+
+        if tableView === skillsTableView {
+            selectSkillsPublisher.accept(indexPath)
+        }
+
+        if tableView === projectDetailTableView {
+            selectProjectDetailPublisher.accept(indexPath)
+        }
+
+        if tableView === educationDetailTableView {
+            selectEducationDetailPublisher.accept(indexPath)
+        }
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        false
+        true
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            if tableView === workSummaryTableView {
+                workInfoList.remove(at: indexPath.row)
+                deleteFromTable(tableView: tableView, indexPath: indexPath, deleteRelay: deleteWorkSummaryPublisher)
+            }
+
+            if tableView === skillsTableView {
+                skillsList.remove(at: indexPath.row)
+                deleteFromTable(tableView: tableView, indexPath: indexPath, deleteRelay: deleteSkillsPublisher)
+            }
+
+            if tableView === projectDetailTableView {
+                projectDetailList.remove(at: indexPath.row)
+                deleteFromTable(tableView: tableView, indexPath: indexPath, deleteRelay: deleteProjectDetailPublisher)
+            }
+
+            if tableView === educationDetailTableView {
+                educationDetailList.remove(at: indexPath.row)
+                deleteFromTable(tableView: tableView, indexPath: indexPath, deleteRelay: deleteEducationDetailPublisher)
+            }
+        }
+    }
+
+    func deleteFromTable(tableView: UITableView, indexPath: IndexPath, deleteRelay: PublishRelay<IndexPath>) {
+        // Some trick with completion handler on delete animation
+        // Problem with auto update resumeList after deleteResumePublisher
+        // Best solution will be using RXDataSource
+        CATransaction.begin()
+        tableView.beginUpdates()
+        CATransaction.setCompletionBlock {
+            deleteRelay.accept(indexPath)
+        }
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        tableView.endUpdates()
+        CATransaction.commit()
     }
 }
 
 extension ResumeEditingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        if tableView === workSummaryTableView {
+            return workInfoList.count
+        }
+
+        if tableView === skillsTableView {
+            return skillsList.count
+        }
+
+        if tableView === projectDetailTableView {
+            return projectDetailList.count
+        }
+
+        if tableView === educationDetailTableView {
+            return educationDetailList.count
+        }
+
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         reusableCell.textLabel?.text = "Hello world \(indexPath.row)"
+        
+        if tableView === workSummaryTableView {
+            reusableCell.textLabel?.text = "\(workInfoList[indexPath.row].companyName)"
+        }
+
+        if tableView === skillsTableView {
+            reusableCell.textLabel?.text = "\(skillsList[indexPath.row])"
+        }
+
+        if tableView === projectDetailTableView {
+            reusableCell.textLabel?.text = "\(projectDetailList[indexPath.row].projectName)"
+        }
+
+        if tableView === educationDetailTableView {
+            reusableCell.textLabel?.text = "\(educationDetailList[indexPath.row].classEducation) \(educationDetailList[indexPath.row].passingYear) \(educationDetailList[indexPath.row].percentage)"
+        }
         
         return reusableCell
     }
