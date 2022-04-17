@@ -28,11 +28,12 @@ struct EducationDetailModelFactory {
     struct Input {
         let viewWillAppear: Signal<Void>
         let saveResume: Signal<Void>
-        //let resumeNameText: Driver<String>
+        let educationInstituteNameText: Driver<String>
     }
 
     struct ViewModel {
-        //let allFieldValid: Driver<Bool>
+        let allFieldValid: Driver<Bool>
+        let educationInstituteNameText: Driver<String>
     }
 
     func createViewModel(_ input: Input) -> ViewModel {
@@ -48,7 +49,7 @@ struct EducationDetailModelFactory {
             .startWith(false)*/
 
         return ViewModel(
-            /*allFieldValid: allFieldValid*/
+            allFieldValid: allFieldValid
         )
     }
 }

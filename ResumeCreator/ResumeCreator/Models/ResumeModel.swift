@@ -55,12 +55,13 @@ struct WorkInfoModel {
 }
 
 struct EducationDetailModel {
-    let classEducation: Int
-    let passingYear: Date
-    let percentage: Int
+    var educationInstituteName: String
+    var classEducation: Int
+    var passingYear: Date
+    var percentage: Int
 
     static func createNewEmptyEducationDetail() -> EducationDetailModel {
-        EducationDetailModel(classEducation: 0, passingYear: .now, percentage: 0)
+        EducationDetailModel(educationInstituteName: "", classEducation: 0, passingYear: .now, percentage: 0)
     }
 }
 

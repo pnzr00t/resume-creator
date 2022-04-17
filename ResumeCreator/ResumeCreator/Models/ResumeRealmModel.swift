@@ -95,6 +95,7 @@ final class ResumeEntity: Object {
                 .map { educationDetailModel in
                     let educationDetailEntity = EducationDetailEntity()
 
+                    educationDetailEntity.educationInstituteName = educationDetailModel.educationInstituteName
                     educationDetailEntity.classEducation = educationDetailModel.classEducation
                     educationDetailEntity.passingYear = educationDetailModel.passingYear
                     educationDetailEntity.percentage = educationDetailModel.percentage
@@ -131,12 +132,13 @@ final class WorkInfoEntity: EmbeddedObject {
 }
 
 final class EducationDetailEntity: EmbeddedObject {
+    @Persisted var educationInstituteName: String
     @Persisted var classEducation: Int
     @Persisted var passingYear: Date
     @Persisted var percentage: Int
 
     var model: EducationDetailModel {
-        return EducationDetailModel(classEducation: classEducation, passingYear: passingYear, percentage: percentage)
+        return EducationDetailModel(educationInstituteName: educationInstituteName, classEducation: classEducation, passingYear: passingYear, percentage: percentage)
     }
 }
 
