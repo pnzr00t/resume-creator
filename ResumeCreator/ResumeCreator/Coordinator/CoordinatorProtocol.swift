@@ -13,10 +13,16 @@ protocol Coordinator: AnyObject {
     var navigationController: UINavigationController { get set }
 
     func start()
+    func viewDidDisappear()
     func childDidFinish(_ child: Coordinator?)
 }
 
 extension Coordinator {
+    // Very danger solution of coordinator chain, but it's simple and fast
+    func viewDidDisappear() {
+        parentCoordinator?.childDidFinish(self)
+    }
+
     func childDidFinish(_ child: Coordinator?) {
         for (index, coordinator) in childCoordinators.enumerated() {
             if coordinator === child {

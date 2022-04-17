@@ -12,18 +12,20 @@ class ProjectDetailCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
+    private var dependencies: ProjectDetailViewController.Dependencies
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, dependencies: ProjectDetailViewController.Dependencies) {
         self.navigationController = navigationController
+        self.dependencies = dependencies
     }
 
     func start() {
-        let vc = ProjectDetailViewController()
+        let vc = ProjectDetailViewController(dependencies: dependencies)
         vc.coordinator = self
-        navigationController.pushViewController(vc, animated: false)
+        navigationController.pushViewController(vc, animated: true)
     }
 }
 
 protocol ProjectDetailAddingRoute: AnyObject {
-    func projectDetailAdding()
+    func projectDetailAdding(projectDetailEditing: ProjectDetailModel, successCompletion: @escaping ((ProjectDetailModel) -> Void))
 }

@@ -12,23 +12,31 @@ class ResumeEditingCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
-    private let resume: ResumeModel
+    private var dependencies: ResumeEditingViewController.Dependencies
 
-    init(navigationController: UINavigationController, resume: ResumeModel) {
+    init(navigationController: UINavigationController, dependencies: ResumeEditingViewController.Dependencies) {
         self.navigationController = navigationController
-        self.resume = resume
+        self.dependencies = dependencies
     }
 
     func start() {
-        let vc = ResumeEditingViewController()
+        let vc = ResumeEditingViewController(dependencies: self.dependencies)
         vc.coordinator = self
-        navigationController.pushViewController(vc, animated: false)
+        navigationController.pushViewController(vc, animated: true)
     }
 }
 
 extension ResumeEditingCoordinator: WorkInfoAddingRoute {
-    func workInfoAdding() {
-        let childCoordinator = WorkInfoCoordinator(navigationController: navigationController)
+    func workInfoAdding(workInfoEditing: WorkInfoModel, successCompletion: @escaping ((WorkInfoModel) -> Void)) {
+        let dependencies = WorkInfoViewController.Dependencies(
+            viewModelFactory: WorkInfoViewModelFactory(
+                dependencies: WorkInfoViewModelFactory.Dependencies(
+                    workInfoEditing: workInfoEditing,
+                    successSaveCompletion: successCompletion
+                )
+            )
+        )
+        let childCoordinator = WorkInfoCoordinator(navigationController: navigationController, dependencies: dependencies)
         childCoordinator.parentCoordinator = self
         childCoordinators.append(childCoordinator)
         childCoordinator.start()
@@ -36,8 +44,16 @@ extension ResumeEditingCoordinator: WorkInfoAddingRoute {
 }
 
 extension ResumeEditingCoordinator: EducationDetailAddingRoute {
-    func educationDetailAdding() {
-        let childCoordinator = EducationDetailCoordinator(navigationController: navigationController)
+    func educationDetailAdding(educationDetailEditing: EducationDetailModel, successCompletion: @escaping ((EducationDetailModel) -> Void)) {
+        let dependencies = EducationDetailViewController.Dependencies(
+            viewModelFactory: EducationDetailModelFactory(
+                dependencies: EducationDetailModelFactory.Dependencies(
+                    educationDetailEditing: educationDetailEditing,
+                    successSaveCompletion: successCompletion
+                )
+            )
+        )
+        let childCoordinator = EducationDetailCoordinator(navigationController: navigationController, dependencies: dependencies)
         childCoordinator.parentCoordinator = self
         childCoordinators.append(childCoordinator)
         childCoordinator.start()
@@ -45,8 +61,17 @@ extension ResumeEditingCoordinator: EducationDetailAddingRoute {
 }
 
 extension ResumeEditingCoordinator: ProjectDetailAddingRoute {
-    func projectDetailAdding() {
-        let childCoordinator = ProjectDetailCoordinator(navigationController: navigationController)
+    func projectDetailAdding(projectDetailEditing: ProjectDetailModel, successCompletion: @escaping ((ProjectDetailModel) -> Void)) {
+        let dependencies = ProjectDetailViewController.Dependencies(
+            viewModelFactory: ProjectDetailModelFactory(
+                dependencies: ProjectDetailModelFactory.Dependencies(
+                    projectDetailEditing: projectDetailEditing,
+                    successSaveCompletion: successCompletion
+                )
+            )
+        )
+
+        let childCoordinator = ProjectDetailCoordinator(navigationController: navigationController, dependencies: dependencies)
         childCoordinator.parentCoordinator = self
         childCoordinators.append(childCoordinator)
         childCoordinator.start()

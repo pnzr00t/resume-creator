@@ -12,18 +12,20 @@ class WorkInfoCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
+    private var dependencies: WorkInfoViewController.Dependencies
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, dependencies: WorkInfoViewController.Dependencies) {
         self.navigationController = navigationController
+        self.dependencies = dependencies
     }
 
     func start() {
-        let vc = WorkInfoViewController()
+        let vc = WorkInfoViewController(dependencies: dependencies)
         vc.coordinator = self
-        navigationController.pushViewController(vc, animated: false)
+        navigationController.pushViewController(vc, animated: true)
     }
 }
 
 protocol WorkInfoAddingRoute: AnyObject {
-    func workInfoAdding()
+    func workInfoAdding(workInfoEditing: WorkInfoModel, successCompletion: @escaping ((WorkInfoModel) -> Void))
 }

@@ -14,18 +14,18 @@ struct ResumeModel {
         case existing(UUID)
     }
 
-    let id: Identifier
-    let resumeName: String
-    let picture: UIImage?
-    let mobileNumberString: String
-    let emailAddress: String
-    let residenceAddress: String
-    let careerObjective: String
-    let totalYearsOfExperience: Int
-    let workSummaryList: [WorkInfoModel]
-    let skillsList: [String]
-    let educationDetailList: [EducationDetailModel]
-    let projectDetailList: [ProjectDetailModel]
+    var id: Identifier
+    var resumeName: String
+    var picture: UIImage?
+    var mobileNumberString: String
+    var emailAddress: String
+    var residenceAddress: String
+    var careerObjective: String
+    var totalYearsOfExperience: Int
+    var workSummaryList: [WorkInfoModel]
+    var skillsList: [String]
+    var educationDetailList: [EducationDetailModel]
+    var projectDetailList: [ProjectDetailModel]
 
     static func createNewEmptyResume() -> ResumeModel {
         ResumeModel(
@@ -48,12 +48,20 @@ struct ResumeModel {
 struct WorkInfoModel {
     let companyName: String
     let duration: Int
+
+    static func createNewEmptyWorkInfo() -> WorkInfoModel {
+        WorkInfoModel(companyName: "", duration: 0)
+    }
 }
 
 struct EducationDetailModel {
     let classEducation: Int
     let passingYear: Date
     let percentage: Int
+
+    static func createNewEmptyEducationDetail() -> EducationDetailModel {
+        EducationDetailModel(classEducation: 0, passingYear: .now, percentage: 0)
+    }
 }
 
 struct ProjectDetailModel {
@@ -62,4 +70,8 @@ struct ProjectDetailModel {
     let projectSummary: String
     let technologyUsed: String
     let role: String
+
+    static func createNewEmptyProjectDetail() -> ProjectDetailModel {
+        ProjectDetailModel(projectName: "", teamSize: 0, projectSummary: "", technologyUsed: "", role: "")
+    }
 }

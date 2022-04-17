@@ -127,8 +127,11 @@ class ResumeMockService: ResumeServiceProtocol {
         return outResumeList[index]
     }
 
-    func addResume(_ resume: ResumeModel) {
-        outResumeList.append(resume)
+    func addResume(_ resume: ResumeModel) -> ResumeModel? {
+        var resumeCopy = resume
+        resumeCopy.id = .existing(UUID())
+        outResumeList.append(resumeCopy)
+        return resumeCopy
     }
 
     func replaceResume(at index: Int, resume: ResumeModel) {
@@ -136,10 +139,23 @@ class ResumeMockService: ResumeServiceProtocol {
     }
 
     func removeObject(_ resume: ResumeModel) {
-        guard case let .existing(resumeID) = resume.id else { return }
+        guard case .existing = resume.id else { return }
 
         outResumeList.removeAll { resumeModel in
             resume.id == resumeModel.id ? true : false
         }
+    }
+
+    func editResume(_ resume: ResumeModel) -> ResumeModel? {
+        guard case let .existing(resumeId) = resume.id else { return addResume(resume) }
+        
+        for (index, resumeFromList) in outResumeList.enumerated() {
+            if case let .existing(uuid) = resumeFromList.id, resumeId == uuid {
+                outResumeList[index] = resume
+                return resume
+            }
+        }
+
+        return nil
     }
 }

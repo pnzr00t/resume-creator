@@ -86,8 +86,10 @@ final class ResumeEntity: Object {
                                 
         )
 
+        skillsList.removeAll()
         skillsList.append(objectsIn: model.skillsList)
 
+        educationDetailList.removeAll()
         educationDetailList.append(
             objectsIn: model.educationDetailList
                 .map { educationDetailModel in
@@ -101,6 +103,7 @@ final class ResumeEntity: Object {
                 }
         )
 
+        projectDetailList.removeAll()
         projectDetailList.append(
             objectsIn: model.projectDetailList
                 .map { projectDetailModel in
