@@ -38,3 +38,13 @@ extension Reactive where Base: UIViewController {
         return controlEvent(for: #selector(UIViewController.viewDidDisappear))
     }
 }
+
+
+extension SharedSequence {
+    func take(_ count: Int) -> SharedSequence<SharingStrategy, Element> {
+        asObservable().take(count).asSharedSequence(
+            sharingStrategy: SharingStrategy.self,
+            onErrorDriveWith: SharedSequence<SharingStrategy, Element>.empty()
+        )
+    }
+}

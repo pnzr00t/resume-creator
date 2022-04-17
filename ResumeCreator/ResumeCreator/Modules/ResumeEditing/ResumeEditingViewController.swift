@@ -7,6 +7,7 @@
 
 import RxCocoa
 import RxSwift
+import RxGesture
 import Foundation
 import UIKit
 
@@ -29,6 +30,7 @@ struct ResumeEditingViewModelFactory {
         let viewWillAppear: Signal<Void>
         let saveResume: Signal<Void>
         let resumeNameText: Driver<String>
+        let selectedAvatarImage: Signal<UIImage?>
         let mobileNumberString: Driver<String>
         let emailAddress: Driver<String>
         let residenceAddress: Driver<String>
@@ -49,7 +51,12 @@ struct ResumeEditingViewModelFactory {
     }
 
     struct ViewModel {
-        /*let resumeNameText: Driver<String>*/
+        let resumeNameText: Driver<String>
+        let selectedImage: Signal<UIImage?>
+        let mobileNumberString: Driver<String>
+        let emailAddress: Driver<String>
+        let residenceAddress: Driver<String>
+        let careerObjective: Driver<String>
         let skillsList: Signal<[String]>
         let workInfoList: Signal<[WorkInfoModel]>
         let educationDetailList: Signal<[EducationDetailModel]>
@@ -59,41 +66,50 @@ struct ResumeEditingViewModelFactory {
     }
 
     func createViewModel(_ input: Input) -> ViewModel {
-        input.resumeNameText
-            .drive(onNext: {
+        let resumeNameText = input.resumeNameText
+            .do(onNext: {
                 resumeState.state.resumeName = $0
             })
-            .disposed(by: disposeBag)
+            .startWith(resumeState.state.resumeName)
 
-        input.mobileNumberString
-            .drive(onNext: {
+        let startImage = resumeState.state.picture ?? UIImage(systemName: "face.smiling.fill")
+        let selectedImage = input.selectedAvatarImage
+            .do(onNext: { avatarImage in
+                resumeState.state.picture = avatarImage
+            })
+            .startWith(startImage)
+            
+
+        let mobileNumberString = input.mobileNumberString
+            .do(onNext: {
                 resumeState.state.mobileNumberString = $0
             })
-            .disposed(by: disposeBag)
+            .startWith(resumeState.state.mobileNumberString)
 
-        input.emailAddress
-            .drive(onNext: {
+        let emailAddress = input.emailAddress
+            .do(onNext: {
                 resumeState.state.emailAddress = $0
             })
-            .disposed(by: disposeBag)
+            .startWith(resumeState.state.emailAddress)
 
-        input.residenceAddress
-            .drive(onNext: {
+
+        let residenceAddress = input.residenceAddress
+            .do(onNext: {
                 resumeState.state.residenceAddress = $0
             })
-            .disposed(by: disposeBag)
+            .startWith(resumeState.state.residenceAddress)
 
-        input.careerObjective
-            .drive(onNext: {
+        let careerObjective = input.careerObjective
+            .do(onNext: {
                 resumeState.state.careerObjective = $0
             })
-            .disposed(by: disposeBag)
+            .startWith(resumeState.state.careerObjective)
 
-        input.totalYearsOfExperience
-            .drive(onNext: {
-                resumeState.state.totalYearsOfExperience = $0
+        let totalYearsOfExperience = input.totalYearsOfExperience
+            .do(onNext: { totalYearsOfExperience in
+                resumeState.state.totalYearsOfExperience = totalYearsOfExperience
             })
-            .disposed(by: disposeBag)
+            .startWith(resumeState.state.totalYearsOfExperience)
 
 
         input.saveResume.asObservable()
@@ -160,13 +176,18 @@ struct ResumeEditingViewModelFactory {
             .startWith(false)
 
         return ViewModel(
-            /*resumeNameText: resumeNameText,*/
+            resumeNameText: resumeNameText,
+            selectedImage: selectedImage,
+            mobileNumberString: mobileNumberString,
+            emailAddress: emailAddress,
+            residenceAddress: residenceAddress,
+            careerObjective: careerObjective,
             skillsList: skillsList,
             workInfoList: workInfoList,
             educationDetailList: educationDetailList,
             projectDetailList: projectDetailList,
             allFieldValid: allFieldValid.asDriver(onErrorJustReturn: true),
-            totalYearsOfExperience: input.totalYearsOfExperience
+            totalYearsOfExperience: totalYearsOfExperience
         )
     }
 }
@@ -227,6 +248,7 @@ class ResumeEditingViewController: UIViewController {
          image.layer.cornerRadius = avatarImageSize.width/2
          image.clipsToBounds = true*/
     }()
+    private lazy var selectedAvatarImage = PublishRelay<UIImage?>()
     
     private lazy var mobileNumberLabel: UILabel = {
         let label = UILabel()
@@ -424,7 +446,6 @@ class ResumeEditingViewController: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .green
         commonInit()
-        tempInitViews()
         tableViewIniting()
         setupBindings()
     }
@@ -633,21 +654,6 @@ class ResumeEditingViewController: UIViewController {
         }
     }
 
-    // FIXME: Delete this
-    private func tempInitViews() {
-        resumeNameTextField.text = dependencies.viewModelFactory.dependencies.editingResume.resumeName
-        if let avatar = dependencies.viewModelFactory.dependencies.editingResume.picture {
-            avatarImage.image = avatar
-        }
-        mobileNumberTextField.text = dependencies.viewModelFactory.dependencies.editingResume.mobileNumberString
-        emailAddressTextField.text = dependencies.viewModelFactory.dependencies.editingResume.emailAddress
-        residenceAddressTextField.text = dependencies.viewModelFactory.dependencies.editingResume.residenceAddress
-        careerObjectiveTextField.text = dependencies.viewModelFactory.dependencies.editingResume.careerObjective
-
-        totalYearsOfExperienceValueLabel.text = "\(dependencies.viewModelFactory.dependencies.editingResume.totalYearsOfExperience)"
-        totalYearsOfExperienceStepper.value = Double(dependencies.viewModelFactory.dependencies.editingResume.totalYearsOfExperience)
-    }
-
     private func tableViewIniting() {
         workSummaryTableView.delegate = self
         skillsTableView.delegate = self
@@ -671,6 +677,7 @@ class ResumeEditingViewController: UIViewController {
                 viewWillAppear: rx.viewWillAppear.asSignal(),
                 saveResume: barButtonItem.rx.tap.asSignal(),
                 resumeNameText: resumeNameTextField.rx.text.compactMap { $0 }.asDriver(onErrorJustReturn: ""),
+                selectedAvatarImage: selectedAvatarImage.asSignal(),
                 mobileNumberString: mobileNumberTextField.rx.text.compactMap { $0 }.asDriver(onErrorJustReturn: ""),
                 emailAddress: emailAddressTextField.rx.text.compactMap { $0 }.asDriver(onErrorJustReturn: ""),
                 residenceAddress: residenceAddressTextField.rx.text.compactMap { $0 }.asDriver(onErrorJustReturn: ""),
@@ -691,11 +698,69 @@ class ResumeEditingViewController: UIViewController {
             )
         )
         
+        viewModel.resumeNameText.asObservable()
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+
+                self.resumeNameTextField.text = text
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.selectedImage.asObservable()
+            .subscribe(onNext: { [weak self] selectedImage in
+                guard let self = self else { return }
+
+                self.avatarImage.image = selectedImage
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.mobileNumberString.asObservable()
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+
+                self.mobileNumberTextField.text = text
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.emailAddress.asObservable()
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+
+                self.emailAddressTextField.text = text
+            })
+            .disposed(by: disposeBag)
+    
+        viewModel.residenceAddress.asObservable()
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+
+                self.residenceAddressTextField.text = text
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.careerObjective.asObservable()
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+
+                self.careerObjectiveTextField.text = text
+            })
+            .disposed(by: disposeBag)
+
         viewModel.allFieldValid
             .drive(onNext: { [weak self] isValid in
                 guard let self = self else { return }
 
                 self.barButtonItem.isEnabled = isValid
+            })
+            .disposed(by: disposeBag)
+
+        // Stepper init
+        viewModel.totalYearsOfExperience
+            .take(1)
+            .drive(onNext: { [weak self] totalYearsOfExperience in
+                guard let self = self else { return }
+
+                self.totalYearsOfExperienceStepper.value = Double(totalYearsOfExperience)
             })
             .disposed(by: disposeBag)
 
@@ -738,6 +803,33 @@ class ResumeEditingViewController: UIViewController {
                 self.projectDetailList = projectDetailList
             })
             .disposed(by: disposeBag)
+
+        avatarImage.rx.tapGesture()
+            .when(.recognized)
+            .asObservable()
+            .subscribe(onNext: { [weak self] projectDetailList in
+                guard let self = self else { return }
+
+                self.showImagePicker()
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+extension ResumeEditingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+
+        selectedAvatarImage.accept(image)
+
+        dismiss(animated: true)
+    }
+
+    func showImagePicker() {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
     }
 }
 
