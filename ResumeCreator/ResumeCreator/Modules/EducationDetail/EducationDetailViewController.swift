@@ -31,6 +31,7 @@ struct EducationDetailModelFactory {
         let educationInstituteNameText: Driver<String>
         let datePicker: Signal<Date>
         let classPicker: Signal<Int>
+        let percentagePicker: Signal<Int>
     }
 
     struct ViewModel {
@@ -38,6 +39,7 @@ struct EducationDetailModelFactory {
         let educationInstituteNameText: Driver<String>
         let dateString: Driver<String>
         let classString: Driver<String>
+        let percentageString: Driver<String>
     }
 
     func createViewModel(_ input: Input) -> ViewModel {
@@ -76,6 +78,16 @@ struct EducationDetailModelFactory {
                 return EducationDetailModel.ClassEducation(id: classInt).getString()
             }
 
+        let percentageString = input.percentagePicker
+            .do(onNext: {
+                educationDetailState.state.percentage = $0
+            })
+            .startWith(educationDetailState.state.percentage)
+            .map { percentage -> String in
+
+                return "\(percentage)%"
+            }
+
         let educationInstituteNameValid = educationInstituteNameText.map({ $0.count > 0 }).asSignal(onErrorJustReturn: true)
         let allFieldValid = Signal.merge(educationInstituteNameValid)
             .startWith(false)
@@ -84,7 +96,8 @@ struct EducationDetailModelFactory {
             allFieldValid: allFieldValid.asDriver(onErrorJustReturn: true),
             educationInstituteNameText: educationInstituteNameText,
             dateString: dateString.asDriver(onErrorJustReturn: ""),
-            classString: classString.asDriver(onErrorJustReturn: "")
+            classString: classString.asDriver(onErrorJustReturn: ""),
+            percentageString: percentageString.asDriver(onErrorJustReturn: "")
         )
     }
 }
@@ -210,6 +223,44 @@ class EducationDetailViewController: UIViewController {
     }()
     private let classPickerPublisher = PublishRelay<Int>()
     
+    /// Percentage/CGPA + label + percentagePicker ToolBar
+    private lazy var percentagePicker: UIPickerView = {
+        let percentagePicker = UIPickerView()
+
+        return percentagePicker
+    }()
+    private lazy var percentagePickerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Percentage/CGPA"
+        label.font = .systemFont(ofSize: 16)
+        return label
+    }()
+    private var choicePercentageDoneBarButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
+    private lazy var percentagePickerTextField: UITextField = {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+
+        toolbar.setItems([choicePercentageDoneBarButton], animated: true)
+
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Choice Percentage/CGPA..."
+        textField.keyboardType = UIKeyboardType.default
+        textField.returnKeyType = UIReturnKeyType.done
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.font = UIFont.systemFont(ofSize: 13)
+        textField.borderStyle = UITextField.BorderStyle.roundedRect
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing;
+        textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        textField.allowsEditingTextAttributes = false
+        
+        textField.inputView = percentagePicker
+        textField.inputAccessoryView = toolbar
+
+        return textField
+    }()
+    private let percentagePickerPublisher = PublishRelay<Int>()
+
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
         super.init(nibName: nil, bundle: nil)
@@ -242,6 +293,9 @@ class EducationDetailViewController: UIViewController {
 
         self.classPicker.delegate = self
         self.classPicker.dataSource = self
+
+        self.percentagePicker.delegate = self
+        self.percentagePicker.dataSource = self
 
         view.addSubview(contentView)
         contentView.snp.makeConstraints { make in
@@ -292,6 +346,20 @@ class EducationDetailViewController: UIViewController {
             make.leading.equalToSuperview().inset(Constants.leadingInset)
             make.trailing.equalToSuperview().inset(Constants.trailingInset)
         }
+        
+        // Percentage/CGPA picker institute name
+        contentView.addSubview(percentagePickerLabel)
+        percentagePickerLabel.snp.makeConstraints { make in
+            make.top.equalTo(classPickerTextField.snp.bottom).offset(Constants.moduleOffset)
+            make.leading.equalToSuperview().inset(Constants.leadingInset)
+        }
+
+        contentView.addSubview(percentagePickerTextField)
+        percentagePickerTextField.snp.makeConstraints { make in
+            make.top.equalTo(percentagePickerLabel.snp.bottom).offset(Constants.labelToTextOffset)
+            make.leading.equalToSuperview().inset(Constants.leadingInset)
+            make.trailing.equalToSuperview().inset(Constants.trailingInset)
+        }
     }
 
     private func setupBindings() {
@@ -301,7 +369,8 @@ class EducationDetailViewController: UIViewController {
                 saveResume: barButtonItem.rx.tap.asSignal(),
                 educationInstituteNameText: educationInstituteNameTextField.rx.text.compactMap { $0 }.asDriver(onErrorJustReturn: "").skip(1),
                 datePicker: datePickerPublisher.asSignal(),
-                classPicker: classPickerPublisher.asSignal()
+                classPicker: classPickerPublisher.asSignal(),
+                percentagePicker: percentagePickerPublisher.asSignal()
             )
         )
 
@@ -357,6 +426,25 @@ class EducationDetailViewController: UIViewController {
                 self.classPickerTextField.text = classString
             })
             .disposed(by: disposeBag)
+
+        // Percentage picker
+        choicePercentageDoneBarButton.rx.tap
+            .subscribe { [weak self] _ in
+                guard let self = self else { return }
+                self.view.endEditing(true)
+
+                let selectedRow = self.percentagePicker.selectedRow(inComponent: 0)
+                self.percentagePickerPublisher.accept(selectedRow)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.percentageString
+            .drive(onNext: { [weak self] percentageString in
+                guard let self = self else { return }
+
+                self.percentagePickerTextField.text = percentageString
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -365,12 +453,20 @@ extension EducationDetailViewController: UIPickerViewDataSource {
         if pickerView === classPicker {
             return 1
         }
+
+        if pickerView === percentagePicker {
+            return 1
+        }
         return 0
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView === classPicker {
             return EducationDetailModel.ClassEducation.allCases.count
+        }
+
+        if pickerView === percentagePicker {
+            return Array(0...100).count
         }
         return 0
     }
@@ -381,6 +477,10 @@ extension EducationDetailViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView === classPicker {
             return EducationDetailModel.ClassEducation(id: row).getString()
+        }
+
+        if pickerView === percentagePicker {
+            return "\(row)%"
         }
         return nil
     }
