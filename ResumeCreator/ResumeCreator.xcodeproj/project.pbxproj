@@ -114,11 +114,11 @@
 		7722C9FE280600DD00B248DB /* ResumeCreator */ = {
 			isa = PBXGroup;
 			children = (
+				7722CA132806020600B248DB /* Models */,
+				7722CA18280607ED00B248DB /* Services */,
 				77A69EFF280AD51B00D64579 /* CommonViews */,
 				77CC4E12280757A600CA6A08 /* Coordinator */,
 				77CC4E0F280755DF00CA6A08 /* Modules */,
-				7722CA18280607ED00B248DB /* Managers */,
-				7722CA132806020600B248DB /* Models */,
 				7722C9FF280600DD00B248DB /* AppDelegate.swift */,
 				7722CA01280600DD00B248DB /* SceneDelegate.swift */,
 				7722CA08280600E000B248DB /* Assets.xcassets */,
@@ -137,14 +137,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		7722CA18280607ED00B248DB /* Managers */ = {
+		7722CA18280607ED00B248DB /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				7722CA192806084100B248DB /* ResumeServiceProtocol.swift */,
 				7722E28A280734B6008DB20B /* ResumeRealmService.swift */,
 				7722CA1B28060B5700B248DB /* ResumeMockService.swift */,
 			);
-			path = Managers;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		77A69EFF280AD51B00D64579 /* CommonViews */ = {

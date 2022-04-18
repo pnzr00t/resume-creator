@@ -83,10 +83,11 @@ class WorkInfoViewController: UIViewController {
 
     private lazy var contentView: UIView = {
         let contentView = UIView()
-        //contentView.backgroundColor = .blue
+
         return contentView
     }()
 
+    /// Company Name
     private lazy var companyNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Company Name"
@@ -107,6 +108,7 @@ class WorkInfoViewController: UIViewController {
         return textField
     }()
 
+    /// Experience duration
     private lazy var durationExperienceLabel: UILabel = {
         let label = UILabel()
         label.text = "Total years of experience"
@@ -190,7 +192,6 @@ class WorkInfoViewController: UIViewController {
         durationExperienceStepper.snp.makeConstraints { make in
             make.top.equalTo(durationExperienceLabel.snp.bottom).offset(Constants.labelToTextOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
-            //make.trailing.equalToSuperview().inset(Constants.trailingInset)
         }
 
         contentView.addSubview(durationExperienceValueLabel)

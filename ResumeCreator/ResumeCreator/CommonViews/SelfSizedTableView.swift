@@ -11,7 +11,6 @@ import UIKit
 
 final class SelfSizedTableView: UITableView {
     private let disposeBag: DisposeBag = .init()
-    // Refactor: replace constraint with overridden intrinsicContentSize
     private var heightConstraint: NSLayoutConstraint?
     fileprivate let heightRelay = BehaviorRelay<CGFloat>(value: 0)
 
@@ -28,8 +27,6 @@ final class SelfSizedTableView: UITableView {
                 self.heightRelay.accept(contentSize.height)
             }
             .disposed(by: disposeBag)
-
-        //separatorStyle = .none
     }
     
     @available(*, unavailable)

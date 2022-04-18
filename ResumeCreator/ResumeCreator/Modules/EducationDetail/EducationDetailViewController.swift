@@ -116,7 +116,7 @@ class EducationDetailViewController: UIViewController {
 
     private lazy var contentView: UIView = {
         let contentView = UIView()
-        //contentView.backgroundColor = .blue
+
         return contentView
     }()
 

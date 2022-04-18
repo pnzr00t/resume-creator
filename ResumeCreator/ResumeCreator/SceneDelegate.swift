@@ -27,14 +27,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // tell the coordinator to take over control
         coordinator?.start()
 
-        // FIXME: MOCK - INFO. delete this code
-        // FIXME: MOCK - INFO. delete this code
-        /*let mockService = ResumeMockService()
-        let realmService = ResumeRealmService(realmFileName: "resume-data")
-        for resume in mockService.getResumeList() {
-            realmService.addResume(resume)
-        }*/
-
         // create a basic UIWindow and activate it
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = navController

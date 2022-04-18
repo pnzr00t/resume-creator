@@ -168,8 +168,8 @@ struct ResumeEditingViewModelFactory {
             )
         }
         let skillEdit = Signal.merge(addSkillChain, editSkillChain)
-            .debug(":DEUBUG: skillEdit")
-        
+
+
         // Work Info
         let deleteWorkInfo = input.deleteWorkInfo
             .do(onNext: { indexPath in
@@ -200,7 +200,7 @@ struct ResumeEditingViewModelFactory {
             )
         }
         let workInfoEdit = Signal.merge(addWorkInfoChain, editWorkInfoChain)
-            .debug(":DEUBUG: workInfoEdit")
+
 
         // Education list
         let deleteEducationList = input.deleteEducationDetail
@@ -232,7 +232,7 @@ struct ResumeEditingViewModelFactory {
             )
         }
         let educationDetailEdit = Signal.merge(addEducationDetailChain, editEducationDetailChain)
-            .debug(":DEUBUG: educationDetailEdit")
+
 
         // Project Detail
         let deleteProjectDetail = input.deleteEducationDetail
@@ -264,7 +264,7 @@ struct ResumeEditingViewModelFactory {
             )
         }
         let projectDetailEdit = Signal.merge(addProjectDetailChain, editProjectDetailChain)
-            .debug(":DEUBUG: projectDetailEdit")
+
 
         let resumeNameValid = input.resumeNameText.map({ $0.count > 0 }).asSignal(onErrorJustReturn: true)
         let allFieldValid = Signal.merge(resumeNameValid)
@@ -303,12 +303,12 @@ class ResumeEditingViewController: UIViewController {
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        //scrollView.backgroundColor = .red
+
         return scrollView
     }()
     private lazy var contentView: UIView = {
         let contentView = UIView()
-        //contentView.backgroundColor = .blue
+
         return contentView
     }()
     
@@ -340,15 +340,11 @@ class ResumeEditingViewController: UIViewController {
     }()
     private lazy var avatarImage: UIImageView = {
         UIImageView(image: UIImage(systemName: "face.smiling.fill"))
-        
-        /*image.layer.borderWidth = 1
-         image.layer.masksToBounds = false
-         image.layer.borderColor = UIColor.black.cgColor
-         image.layer.cornerRadius = avatarImageSize.width/2
-         image.clipsToBounds = true*/
     }()
     private lazy var selectedAvatarImage = PublishRelay<UIImage?>()
     
+    // TODO: Refactoring
+    // Need add validation for this field and validation for save button
     private lazy var mobileNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "Mobile number"
@@ -369,6 +365,8 @@ class ResumeEditingViewController: UIViewController {
         return textField
     }()
 
+    // TODO: Refactoring
+    // Need add validation for this field and validation for save button
     private lazy var emailAddressLabel: UILabel = {
         let label = UILabel()
         label.text = "Email Address"
@@ -389,6 +387,8 @@ class ResumeEditingViewController: UIViewController {
         return textField
     }()
 
+    // TODO: Refactoring
+    // Need add Map/Location picker
     private lazy var residenceAddressLabel: UILabel = {
         let label = UILabel()
         label.text = "Residence Address"
@@ -408,7 +408,9 @@ class ResumeEditingViewController: UIViewController {
         textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         return textField
     }()
-    
+
+    // TODO: Refactoring
+    // Make multiline carreeObjectiveTextField
     private lazy var careerObjectiveLabel: UILabel = {
         let label = UILabel()
         label.text = "Career Objective"
@@ -450,6 +452,12 @@ class ResumeEditingViewController: UIViewController {
         return label
     }()
     
+    // TODO: For refactoring
+    // I need cut workSummaryLabel + workSummaryAddButton + workSummaryTableView ...
+    // Move it to new workSummaryData view controller (or create this as genericVC)
+    // and add this here as embeded View controller.
+    // From here i will send workInfoList and receive messages
+    // From control events (selectWorkSummary, deleteWorkSummary, addWorkSummary)
     private lazy var workSummaryLabel: UILabel = {
         let label = UILabel()
         label.text = "Work Summary"
@@ -470,6 +478,8 @@ class ResumeEditingViewController: UIViewController {
     private var workInfoList = [WorkInfoModel]()
 
 
+    // TODO: For refactoring
+    // Same as work WorkSummary
     private lazy var skillsLabel: UILabel = {
         let label = UILabel()
         label.text = "Skills"
@@ -489,6 +499,8 @@ class ResumeEditingViewController: UIViewController {
     private let deleteSkillsPublisher = PublishRelay<IndexPath>()
     private var skillsList = [String]()
 
+    // TODO: For refactoring
+    // Same as work WorkSummary
     private lazy var educationDetailLabel: UILabel = {
         let label = UILabel()
         label.text = "Education Details"
@@ -508,6 +520,8 @@ class ResumeEditingViewController: UIViewController {
     private let deleteEducationDetailPublisher = PublishRelay<IndexPath>()
     private var educationDetailList = [EducationDetailModel]()
 
+    // TODO: For refactoring
+    // Same as work WorkSummary
     private lazy var projectDetailLabel: UILabel = {
         let label = UILabel()
         label.text = "Project Details"
@@ -560,9 +574,9 @@ class ResumeEditingViewController: UIViewController {
     
     private func commonInit() {
         navigationItem.rightBarButtonItem = barButtonItem
-        
+
         title = "Editing resume"
-        
+
         view.addSubview(scrollView)
         scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -674,42 +688,41 @@ class ResumeEditingViewController: UIViewController {
         totalYearsOfExperienceStepper.snp.makeConstraints { make in
             make.top.equalTo(totalYearsOfExperienceLabel.snp.bottom).offset(Constants.labelToTextOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
-            //make.trailing.equalToSuperview().inset(Constants.trailingInset)
         }
-        
+
         contentView.addSubview(totalYearsOfExperienceValueLabel)
         totalYearsOfExperienceValueLabel.snp.makeConstraints { make in
             make.centerY.equalTo(totalYearsOfExperienceStepper.snp.centerY)
             make.leading.equalTo(totalYearsOfExperienceStepper.snp.trailing).offset(Constants.stepperToLabelValueOffset)
         }
-        
+
         // workSummary - label + add button + tableview
         contentView.addSubview(workSummaryLabel)
         workSummaryLabel.snp.makeConstraints { make in
             make.top.equalTo(totalYearsOfExperienceStepper.snp.bottom).offset(Constants.moduleOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
         }
-        
+
         contentView.addSubview(workSummaryAddButton)
         workSummaryAddButton.snp.makeConstraints { make in
             make.centerY.equalTo(workSummaryLabel.snp.centerY)
             make.leading.equalTo(workSummaryLabel.snp.trailing).offset(Constants.labelToAddImageOffset)
         }
-        
+
         contentView.addSubview(workSummaryTableView)
         workSummaryTableView.snp.makeConstraints { make in
             make.top.equalTo(workSummaryLabel.snp.bottom).offset(Constants.labelToTextOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
             make.trailing.equalToSuperview().inset(Constants.trailingInset)
         }
-        
+
         // Skills - label + add button + tableview
         contentView.addSubview(skillsLabel)
         skillsLabel.snp.makeConstraints { make in
             make.top.equalTo(workSummaryTableView.snp.bottom).offset(Constants.moduleOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
         }
-        
+
         contentView.addSubview(skillsAddButton)
         skillsAddButton.snp.makeConstraints { make in
             make.centerY.equalTo(skillsLabel.snp.centerY)
@@ -722,6 +735,7 @@ class ResumeEditingViewController: UIViewController {
             make.leading.equalToSuperview().inset(Constants.leadingInset)
             make.trailing.equalToSuperview().inset(Constants.trailingInset)
         }
+
         
         // Education Detail - label + add button + tableview
         contentView.addSubview(educationDetailLabel)
@@ -755,25 +769,13 @@ class ResumeEditingViewController: UIViewController {
             make.centerY.equalTo(projectDetailLabel.snp.centerY)
             make.leading.equalTo(projectDetailLabel.snp.trailing).offset(Constants.labelToAddImageOffset)
         }
-        
+
         contentView.addSubview(projectDetailTableView)
         projectDetailTableView.snp.makeConstraints { make in
             make.top.equalTo(projectDetailAddButton.snp.bottom).offset(Constants.labelToTextOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
             make.trailing.equalToSuperview().inset(Constants.trailingInset)
-            //make.bottom.equalToSuperview().inset(16)
-        }
-        
-        // FIXME: DELETE THIS
-        let bottomView = UIView()
-        bottomView.backgroundColor = .white
-        contentView.addSubview(bottomView)
-        bottomView.snp.makeConstraints { make in
-            make.top.equalTo(projectDetailTableView.snp.bottom).offset(Constants.moduleOffset)
-            make.leading.equalToSuperview().inset(Constants.leadingInset)
-            make.trailing.equalToSuperview().inset(Constants.trailingInset)
-            make.height.equalTo(100)
-            make.bottom.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(Constants.bottomInsert)
         }
     }
 
@@ -787,7 +789,7 @@ class ResumeEditingViewController: UIViewController {
         skillsTableView.dataSource = self
         projectDetailTableView.dataSource = self
         educationDetailTableView.dataSource = self
-        
+
         workSummaryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         skillsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         projectDetailTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
@@ -1022,24 +1024,6 @@ extension ResumeEditingViewController: UIImagePickerControllerDelegate, UINaviga
         picker.delegate = self
         present(picker, animated: true)
     }
-    
-    /*func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        // Read the view controller we’re moving from.
-        guard let fromViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {
-            return
-        }
-
-        // Check whether our view controller array already contains that view controller. If it does it means we’re pushing a different view controller on top rather than popping it, so exit.
-        if navigationController.viewControllers.contains(fromViewController) {
-            return
-        }
-
-        // We’re still here – it means we’re popping the view controller, so we can check whether it’s a buy view controller
-        if let buyViewController = fromViewController as? BuyViewController {
-            // We're popping a buy view controller; end its coordinator
-            childDidFinish(buyViewController.coordinator)
-        }
-    }*/
 }
 
 extension ResumeEditingViewController: UITableViewDelegate {
@@ -1127,7 +1111,6 @@ extension ResumeEditingViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        reusableCell.textLabel?.text = "Hello world \(indexPath.row)"
         
         if tableView === workSummaryTableView {
             reusableCell.textLabel?.text = "\(workInfoList[indexPath.row].companyName)"
@@ -1148,46 +1131,7 @@ extension ResumeEditingViewController: UITableViewDataSource {
         return reusableCell
     }
 }
-/*extension ResumeListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectResumePublisher.accept(resumeList[indexPath.row])
-    }
 
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Some trick with completion handler on delete animation
-            // Problem with auto update resumeList after deleteResumePublisher
-            // Best solution will be using RXDataSource
-            let deletedResume = resumeList.remove(at: indexPath.row)
-            CATransaction.begin()
-            tableView.beginUpdates()
-            CATransaction.setCompletionBlock { [weak self] in
-                guard let self = self else { return }
-                self.deleteResumePublisher.accept(deletedResume)
-            }
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            tableView.endUpdates()
-            CATransaction.commit()
-        }
-    }
-}
-
-extension ResumeListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        resumeList.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        reusableCell.textLabel?.text = resumeList[indexPath.row].resumeName
-        
-        return reusableCell
-    }
-}*/
 
 fileprivate enum Constants {
     static let topInset: CGFloat = 16
@@ -1203,4 +1147,5 @@ fileprivate enum Constants {
     
     static let addImageSize: CGSize = CGSize(width: 24, height: 24)
     static let labelToAddImageOffset: CGFloat = 16
+    static let bottomInsert: CGFloat = 50
 }

@@ -114,7 +114,7 @@ class ProjectDetailViewController: UIViewController {
     
     private lazy var contentView: UIView = {
         let contentView = UIView()
-        //contentView.backgroundColor = .blue
+
         return contentView
     }()
 
@@ -286,7 +286,6 @@ class ProjectDetailViewController: UIViewController {
         teamSizeStepper.snp.makeConstraints { make in
             make.top.equalTo(teamSizeLabel.snp.bottom).offset(Constants.labelToTextOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
-            //make.trailing.equalToSuperview().inset(Constants.trailingInset)
         }
 
         contentView.addSubview(teamSizeValueLabel)
