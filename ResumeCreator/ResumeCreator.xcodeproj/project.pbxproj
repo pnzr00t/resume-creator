@@ -18,6 +18,11 @@
 		7722CA1C28060B5800B248DB /* ResumeMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA1B28060B5700B248DB /* ResumeMockService.swift */; };
 		7722E28B280734B6008DB20B /* ResumeRealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722E28A280734B6008DB20B /* ResumeRealmService.swift */; };
 		773931C5280619F9007E0B1C /* ResumeRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773931C4280619F9007E0B1C /* ResumeRealmModel.swift */; };
+		7773D6DA280DE0DF006A7D28 /* WorkInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6D9280DE0DF006A7D28 /* WorkInfoViewModel.swift */; };
+		7773D6DC280DE0EC006A7D28 /* ResumeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6DB280DE0EC006A7D28 /* ResumeListViewModel.swift */; };
+		7773D6DE280DE0F8006A7D28 /* ResumeEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6DD280DE0F8006A7D28 /* ResumeEditingViewModel.swift */; };
+		7773D6E0280DE102006A7D28 /* ProjectDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6DF280DE102006A7D28 /* ProjectDetailViewModel.swift */; };
+		7773D6E2280DE10C006A7D28 /* EducationDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6E1280DE10C006A7D28 /* EducationDetailViewModel.swift */; };
 		77A69EFE280AD51300D64579 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69EFD280AD51300D64579 /* SelfSizedTableView.swift */; };
 		77A69F01280AEC0500D64579 /* ReactiveExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69F00280AEC0500D64579 /* ReactiveExtensions.swift */; };
 		77A69F03280B29D300D64579 /* StateWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69F02280B29D300D64579 /* StateWrapper.swift */; };
@@ -47,6 +52,11 @@
 		7722CA1B28060B5700B248DB /* ResumeMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeMockService.swift; sourceTree = "<group>"; };
 		7722E28A280734B6008DB20B /* ResumeRealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeRealmService.swift; sourceTree = "<group>"; };
 		773931C4280619F9007E0B1C /* ResumeRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeRealmModel.swift; sourceTree = "<group>"; };
+		7773D6D9280DE0DF006A7D28 /* WorkInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkInfoViewModel.swift; sourceTree = "<group>"; };
+		7773D6DB280DE0EC006A7D28 /* ResumeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeListViewModel.swift; sourceTree = "<group>"; };
+		7773D6DD280DE0F8006A7D28 /* ResumeEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeEditingViewModel.swift; sourceTree = "<group>"; };
+		7773D6DF280DE102006A7D28 /* ProjectDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailViewModel.swift; sourceTree = "<group>"; };
+		7773D6E1280DE10C006A7D28 /* EducationDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDetailViewModel.swift; sourceTree = "<group>"; };
 		77A69EFD280AD51300D64579 /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
 		77A69F00280AEC0500D64579 /* ReactiveExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveExtensions.swift; sourceTree = "<group>"; };
 		77A69F02280B29D300D64579 /* StateWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWrapper.swift; sourceTree = "<group>"; };
@@ -181,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				7722CA03280600DD00B248DB /* ResumeListViewController.swift */,
+				7773D6DB280DE0EC006A7D28 /* ResumeListViewModel.swift */,
 				77CC4E13280757DC00CA6A08 /* ResumeListCoordinator.swift */,
 			);
 			path = ResumeList;
@@ -190,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				77CC4E1F2807698100CA6A08 /* WorkInfoViewController.swift */,
+				7773D6D9280DE0DF006A7D28 /* WorkInfoViewModel.swift */,
 				77CC4E25280769BE00CA6A08 /* WorkInfoCoordinator.swift */,
 			);
 			path = WorkInfo;
@@ -199,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				77CC4E1D2807697200CA6A08 /* EducationDetailViewController.swift */,
+				7773D6E1280DE10C006A7D28 /* EducationDetailViewModel.swift */,
 				77CC4E23280769AC00CA6A08 /* EducationDetailCoordinator.swift */,
 			);
 			path = EducationDetail;
@@ -208,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				77CC4E1B2807695F00CA6A08 /* ProjectDetailViewController.swift */,
+				7773D6DF280DE102006A7D28 /* ProjectDetailViewModel.swift */,
 				77CC4E212807699B00CA6A08 /* ProjectDetailCoordinator.swift */,
 			);
 			path = ProjectDetail;
@@ -217,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				77CC4E282807769100CA6A08 /* ResumeEditingViewController.swift */,
+				7773D6DD280DE0F8006A7D28 /* ResumeEditingViewModel.swift */,
 				77CC4E2A2807769C00CA6A08 /* ResumeEditingCoordinator.swift */,
 			);
 			path = ResumeEditing;
@@ -338,6 +353,7 @@
 			files = (
 				7722E28B280734B6008DB20B /* ResumeRealmService.swift in Sources */,
 				77CC4E1C2807695F00CA6A08 /* ProjectDetailViewController.swift in Sources */,
+				7773D6DC280DE0EC006A7D28 /* ResumeListViewModel.swift in Sources */,
 				7722CA1C28060B5800B248DB /* ResumeMockService.swift in Sources */,
 				77CC4E24280769AC00CA6A08 /* EducationDetailCoordinator.swift in Sources */,
 				7722CA04280600DD00B248DB /* ResumeListViewController.swift in Sources */,
@@ -349,14 +365,18 @@
 				77CC4E26280769BE00CA6A08 /* WorkInfoCoordinator.swift in Sources */,
 				7722CA00280600DD00B248DB /* AppDelegate.swift in Sources */,
 				7722CA152806022000B248DB /* ResumeModel.swift in Sources */,
+				7773D6E2280DE10C006A7D28 /* EducationDetailViewModel.swift in Sources */,
 				77CC4E11280757A000CA6A08 /* CoordinatorProtocol.swift in Sources */,
 				773931C5280619F9007E0B1C /* ResumeRealmModel.swift in Sources */,
+				7773D6DE280DE0F8006A7D28 /* ResumeEditingViewModel.swift in Sources */,
 				77A69F01280AEC0500D64579 /* ReactiveExtensions.swift in Sources */,
 				7722CA1A2806084100B248DB /* ResumeServiceProtocol.swift in Sources */,
+				7773D6DA280DE0DF006A7D28 /* WorkInfoViewModel.swift in Sources */,
 				77CC4E202807698100CA6A08 /* WorkInfoViewController.swift in Sources */,
 				7722CA02280600DD00B248DB /* SceneDelegate.swift in Sources */,
 				77CC4E2B2807769C00CA6A08 /* ResumeEditingCoordinator.swift in Sources */,
 				77CC4E222807699B00CA6A08 /* ProjectDetailCoordinator.swift in Sources */,
+				7773D6E0280DE102006A7D28 /* ProjectDetailViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,58 +10,6 @@ import RxSwift
 import UIKit
 import SnapKit
 
-struct ResumeListViewModelFactory {
-    struct Dependencies {
-        let resumeService: ResumeServiceProtocol
-    }
-    
-    let dependencies: Dependencies
-    
-    init(dependencies: Dependencies) {
-        self.dependencies = dependencies
-    }
-    
-    struct Input {
-        let viewWillAppear: Signal<Void>
-        let addButtonPressed: Signal<Void>
-        let selectedResume: Signal<ResumeModel>
-        let deleteResume: Signal<ResumeModel>
-    }
-    
-    struct ViewModel {
-        let cells: Signal<[ResumeModel]>
-        let editResume: Signal<ResumeModel>
-    }
-    
-    func createViewModel(_ input: Input) -> ViewModel {
-        /*let resumeList = input.viewWillAppear.flatMapLatest { _ -> Observable<[ResumeModel]> in
-         Observable.just(dependencies.resumeService.getResumeList())
-         }*/
-        /*let reload = Signal.merge(input.viewWillAppear, input.viewWillAppear)
-         
-         let resumeList = reload.flatMapLatest {
-         return Observable<[ResumeModel]>.just(dependencies.resumeService.getResumeList())
-         }*/
-        //return ViewModel(cells: input.viewWillAppear.map { dependencies.resumeService.getResumeList() })
-        let deleteResume = input.deleteResume
-            .do(onNext: { resumeToDelete in
-                dependencies.resumeService.removeObject(resumeToDelete)
-            })
-            .map { _ in return Void() }
-        
-        let resumeList = Signal.merge(input.viewWillAppear, deleteResume)
-            .flatMapLatest {
-                Observable.just(dependencies.resumeService.getResumeList()).asSignal(onErrorJustReturn: [])
-            }
-        
-        let addNewResumePressed = input.addButtonPressed.map { ResumeModel.createNewEmptyResume() }
-        let editResume = Signal.merge(addNewResumePressed, input.selectedResume)
-        return ViewModel(
-            cells: resumeList,
-            editResume: editResume
-        )
-    }
-}
 
 class ResumeListViewController: UIViewController {
     struct Dependencies {
