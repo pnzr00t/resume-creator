@@ -1141,7 +1141,7 @@ extension ResumeEditingViewController: UITableViewDataSource {
         }
 
         if tableView === educationDetailTableView {
-            reusableCell.textLabel?.text = "\(educationDetailList[indexPath.row].classEducation) \(educationDetailList[indexPath.row].passingYear) \(educationDetailList[indexPath.row].percentage)"
+            reusableCell.textLabel?.text = "\(educationDetailList[indexPath.row].educationInstituteName)"
         }
         
         return reusableCell

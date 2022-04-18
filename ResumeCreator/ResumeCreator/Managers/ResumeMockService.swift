@@ -26,7 +26,7 @@ class ResumeMockService: ResumeServiceProtocol {
                 totalYearsOfExperience: 4,
                 workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
                 skillsList: ["iOS developer", "Analytic manager"],
-                educationDetailList: [EducationDetailModel(classEducation: 4, passingYear: Date(), percentage: 99)],
+                educationDetailList: [EducationDetailModel(educationInstituteName: "Penza state university", classEducation: 4, passingYear: Date(), percentage: 99)],
                 projectDetailList: [
                     ProjectDetailModel(
                         projectName: "Pregnancy Tracker",
@@ -51,7 +51,7 @@ class ResumeMockService: ResumeServiceProtocol {
                 totalYearsOfExperience: 4,
                 workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
                 skillsList: ["iOS developer", "Analytic manager"],
-                educationDetailList: [EducationDetailModel(classEducation: 4, passingYear: Date(), percentage: 99)],
+                educationDetailList: [EducationDetailModel(educationInstituteName: "Moscow state university", classEducation: 4, passingYear: Date(), percentage: 99)],
                 projectDetailList: [
                     ProjectDetailModel(
                         projectName: "Pregnancy Tracker",
@@ -76,7 +76,7 @@ class ResumeMockService: ResumeServiceProtocol {
                 totalYearsOfExperience: 4,
                 workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
                 skillsList: ["iOS developer", "Analytic manager"],
-                educationDetailList: [EducationDetailModel(classEducation: 4, passingYear: Date(), percentage: 99)],
+                educationDetailList: [EducationDetailModel(educationInstituteName: "Chicago university", classEducation: 4, passingYear: Date(), percentage: 99)],
                 projectDetailList: [
                     ProjectDetailModel(
                         projectName: "Pregnancy Tracker",
@@ -101,7 +101,7 @@ class ResumeMockService: ResumeServiceProtocol {
                 totalYearsOfExperience: 4,
                 workSummaryList: [WorkInfoModel(companyName: "Amma.family", duration: 2)],
                 skillsList: ["iOS developer", "Analytic manager"],
-                educationDetailList: [EducationDetailModel(classEducation: 4, passingYear: Date(), percentage: 99)],
+                educationDetailList: [EducationDetailModel(educationInstituteName: "MIT", classEducation: 4, passingYear: Date(), percentage: 99)],
                 projectDetailList: [
                     ProjectDetailModel(
                         projectName: "Pregnancy Tracker",
