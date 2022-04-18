@@ -1,0 +1,609 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		042527CA05B7025A8D5D20E4 /* Pods_ResumeCreator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6C5F7D66040E488ACEA247E /* Pods_ResumeCreator.framework */; };
+		7722CA00280600DD00B248DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722C9FF280600DD00B248DB /* AppDelegate.swift */; };
+		7722CA02280600DD00B248DB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA01280600DD00B248DB /* SceneDelegate.swift */; };
+		7722CA04280600DD00B248DB /* ResumeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA03280600DD00B248DB /* ResumeListViewController.swift */; };
+		7722CA09280600E000B248DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7722CA08280600E000B248DB /* Assets.xcassets */; };
+		7722CA0C280600E000B248DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7722CA0A280600E000B248DB /* LaunchScreen.storyboard */; };
+		7722CA152806022000B248DB /* ResumeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA142806022000B248DB /* ResumeModel.swift */; };
+		7722CA1A2806084100B248DB /* ResumeServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA192806084100B248DB /* ResumeServiceProtocol.swift */; };
+		7722CA1C28060B5800B248DB /* ResumeMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CA1B28060B5700B248DB /* ResumeMockService.swift */; };
+		7722E28B280734B6008DB20B /* ResumeRealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722E28A280734B6008DB20B /* ResumeRealmService.swift */; };
+		773931C5280619F9007E0B1C /* ResumeRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773931C4280619F9007E0B1C /* ResumeRealmModel.swift */; };
+		7773D6DA280DE0DF006A7D28 /* WorkInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6D9280DE0DF006A7D28 /* WorkInfoViewModel.swift */; };
+		7773D6DC280DE0EC006A7D28 /* ResumeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6DB280DE0EC006A7D28 /* ResumeListViewModel.swift */; };
+		7773D6DE280DE0F8006A7D28 /* ResumeEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6DD280DE0F8006A7D28 /* ResumeEditingViewModel.swift */; };
+		7773D6E0280DE102006A7D28 /* ProjectDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6DF280DE102006A7D28 /* ProjectDetailViewModel.swift */; };
+		7773D6E2280DE10C006A7D28 /* EducationDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6E1280DE10C006A7D28 /* EducationDetailViewModel.swift */; };
+		7773D6E5280DE32D006A7D28 /* WorkSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6E4280DE32D006A7D28 /* WorkSummaryCell.swift */; };
+		7773D6E7280DE7EF006A7D28 /* EducationDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6E6280DE7EF006A7D28 /* EducationDetailCell.swift */; };
+		7773D6E9280DEBCB006A7D28 /* ProjectDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6E8280DEBCB006A7D28 /* ProjectDetailCell.swift */; };
+		77A69EFE280AD51300D64579 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69EFD280AD51300D64579 /* SelfSizedTableView.swift */; };
+		77A69F01280AEC0500D64579 /* ReactiveExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69F00280AEC0500D64579 /* ReactiveExtensions.swift */; };
+		77A69F03280B29D300D64579 /* StateWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69F02280B29D300D64579 /* StateWrapper.swift */; };
+		77CC4E11280757A000CA6A08 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E10280757A000CA6A08 /* CoordinatorProtocol.swift */; };
+		77CC4E14280757DC00CA6A08 /* ResumeListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E13280757DC00CA6A08 /* ResumeListCoordinator.swift */; };
+		77CC4E1C2807695F00CA6A08 /* ProjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E1B2807695F00CA6A08 /* ProjectDetailViewController.swift */; };
+		77CC4E1E2807697200CA6A08 /* EducationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E1D2807697200CA6A08 /* EducationDetailViewController.swift */; };
+		77CC4E202807698100CA6A08 /* WorkInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E1F2807698100CA6A08 /* WorkInfoViewController.swift */; };
+		77CC4E222807699B00CA6A08 /* ProjectDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E212807699B00CA6A08 /* ProjectDetailCoordinator.swift */; };
+		77CC4E24280769AC00CA6A08 /* EducationDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E23280769AC00CA6A08 /* EducationDetailCoordinator.swift */; };
+		77CC4E26280769BE00CA6A08 /* WorkInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E25280769BE00CA6A08 /* WorkInfoCoordinator.swift */; };
+		77CC4E292807769100CA6A08 /* ResumeEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E282807769100CA6A08 /* ResumeEditingViewController.swift */; };
+		77CC4E2B2807769C00CA6A08 /* ResumeEditingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E2A2807769C00CA6A08 /* ResumeEditingCoordinator.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		22294E95EAF3080F08D7A2F3 /* Pods-ResumeCreator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ResumeCreator.debug.xcconfig"; path = "Target Support Files/Pods-ResumeCreator/Pods-ResumeCreator.debug.xcconfig"; sourceTree = "<group>"; };
+		7722C9FC280600DD00B248DB /* ResumeCreator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResumeCreator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7722C9FF280600DD00B248DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7722CA01280600DD00B248DB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		7722CA03280600DD00B248DB /* ResumeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeListViewController.swift; sourceTree = "<group>"; };
+		7722CA08280600E000B248DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7722CA0B280600E000B248DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7722CA0D280600E000B248DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7722CA142806022000B248DB /* ResumeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeModel.swift; sourceTree = "<group>"; };
+		7722CA192806084100B248DB /* ResumeServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeServiceProtocol.swift; sourceTree = "<group>"; };
+		7722CA1B28060B5700B248DB /* ResumeMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeMockService.swift; sourceTree = "<group>"; };
+		7722E28A280734B6008DB20B /* ResumeRealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeRealmService.swift; sourceTree = "<group>"; };
+		773931C4280619F9007E0B1C /* ResumeRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeRealmModel.swift; sourceTree = "<group>"; };
+		7773D6D9280DE0DF006A7D28 /* WorkInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkInfoViewModel.swift; sourceTree = "<group>"; };
+		7773D6DB280DE0EC006A7D28 /* ResumeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeListViewModel.swift; sourceTree = "<group>"; };
+		7773D6DD280DE0F8006A7D28 /* ResumeEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeEditingViewModel.swift; sourceTree = "<group>"; };
+		7773D6DF280DE102006A7D28 /* ProjectDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailViewModel.swift; sourceTree = "<group>"; };
+		7773D6E1280DE10C006A7D28 /* EducationDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDetailViewModel.swift; sourceTree = "<group>"; };
+		7773D6E4280DE32D006A7D28 /* WorkSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSummaryCell.swift; sourceTree = "<group>"; };
+		7773D6E6280DE7EF006A7D28 /* EducationDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDetailCell.swift; sourceTree = "<group>"; };
+		7773D6E8280DEBCB006A7D28 /* ProjectDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailCell.swift; sourceTree = "<group>"; };
+		77A69EFD280AD51300D64579 /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
+		77A69F00280AEC0500D64579 /* ReactiveExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveExtensions.swift; sourceTree = "<group>"; };
+		77A69F02280B29D300D64579 /* StateWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWrapper.swift; sourceTree = "<group>"; };
+		77CC4E10280757A000CA6A08 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
+		77CC4E13280757DC00CA6A08 /* ResumeListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeListCoordinator.swift; sourceTree = "<group>"; };
+		77CC4E1B2807695F00CA6A08 /* ProjectDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailViewController.swift; sourceTree = "<group>"; };
+		77CC4E1D2807697200CA6A08 /* EducationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDetailViewController.swift; sourceTree = "<group>"; };
+		77CC4E1F2807698100CA6A08 /* WorkInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkInfoViewController.swift; sourceTree = "<group>"; };
+		77CC4E212807699B00CA6A08 /* ProjectDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailCoordinator.swift; sourceTree = "<group>"; };
+		77CC4E23280769AC00CA6A08 /* EducationDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDetailCoordinator.swift; sourceTree = "<group>"; };
+		77CC4E25280769BE00CA6A08 /* WorkInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkInfoCoordinator.swift; sourceTree = "<group>"; };
+		77CC4E282807769100CA6A08 /* ResumeEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeEditingViewController.swift; sourceTree = "<group>"; };
+		77CC4E2A2807769C00CA6A08 /* ResumeEditingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeEditingCoordinator.swift; sourceTree = "<group>"; };
+		D6C5F7D66040E488ACEA247E /* Pods_ResumeCreator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ResumeCreator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E59CFA2FDD908F027C0A124B /* Pods-ResumeCreator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ResumeCreator.release.xcconfig"; path = "Target Support Files/Pods-ResumeCreator/Pods-ResumeCreator.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7722C9F9280600DD00B248DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				042527CA05B7025A8D5D20E4 /* Pods_ResumeCreator.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4AE3C0B11CE97687CC0FE000 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D6C5F7D66040E488ACEA247E /* Pods_ResumeCreator.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		53A97DB496DFF5220C1A60FF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				22294E95EAF3080F08D7A2F3 /* Pods-ResumeCreator.debug.xcconfig */,
+				E59CFA2FDD908F027C0A124B /* Pods-ResumeCreator.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		7722C9F3280600DD00B248DB = {
+			isa = PBXGroup;
+			children = (
+				7722C9FE280600DD00B248DB /* ResumeCreator */,
+				7722C9FD280600DD00B248DB /* Products */,
+				53A97DB496DFF5220C1A60FF /* Pods */,
+				4AE3C0B11CE97687CC0FE000 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7722C9FD280600DD00B248DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7722C9FC280600DD00B248DB /* ResumeCreator.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7722C9FE280600DD00B248DB /* ResumeCreator */ = {
+			isa = PBXGroup;
+			children = (
+				7722CA132806020600B248DB /* Models */,
+				7722CA18280607ED00B248DB /* Services */,
+				77A69EFF280AD51B00D64579 /* CommonViews */,
+				77CC4E12280757A600CA6A08 /* Coordinator */,
+				77CC4E0F280755DF00CA6A08 /* Modules */,
+				7722C9FF280600DD00B248DB /* AppDelegate.swift */,
+				7722CA01280600DD00B248DB /* SceneDelegate.swift */,
+				7722CA08280600E000B248DB /* Assets.xcassets */,
+				7722CA0A280600E000B248DB /* LaunchScreen.storyboard */,
+				7722CA0D280600E000B248DB /* Info.plist */,
+			);
+			path = ResumeCreator;
+			sourceTree = "<group>";
+		};
+		7722CA132806020600B248DB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7722CA142806022000B248DB /* ResumeModel.swift */,
+				773931C4280619F9007E0B1C /* ResumeRealmModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7722CA18280607ED00B248DB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				7722CA192806084100B248DB /* ResumeServiceProtocol.swift */,
+				7722E28A280734B6008DB20B /* ResumeRealmService.swift */,
+				7722CA1B28060B5700B248DB /* ResumeMockService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7773D6E3280DE307006A7D28 /* TableCells */ = {
+			isa = PBXGroup;
+			children = (
+				7773D6E4280DE32D006A7D28 /* WorkSummaryCell.swift */,
+				7773D6E6280DE7EF006A7D28 /* EducationDetailCell.swift */,
+				7773D6E8280DEBCB006A7D28 /* ProjectDetailCell.swift */,
+			);
+			path = TableCells;
+			sourceTree = "<group>";
+		};
+		77A69EFF280AD51B00D64579 /* CommonViews */ = {
+			isa = PBXGroup;
+			children = (
+				77A69EFD280AD51300D64579 /* SelfSizedTableView.swift */,
+				77A69F00280AEC0500D64579 /* ReactiveExtensions.swift */,
+				77A69F02280B29D300D64579 /* StateWrapper.swift */,
+			);
+			path = CommonViews;
+			sourceTree = "<group>";
+		};
+		77CC4E0F280755DF00CA6A08 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				77CC4E192807682700CA6A08 /* EducationDetail */,
+				77CC4E1A2807683200CA6A08 /* ProjectDetail */,
+				77CC4E272807766C00CA6A08 /* ResumeEditing */,
+				77CC4E152807670A00CA6A08 /* ResumeList */,
+				77CC4E182807680E00CA6A08 /* WorkInfo */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		77CC4E12280757A600CA6A08 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				77CC4E10280757A000CA6A08 /* CoordinatorProtocol.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		77CC4E152807670A00CA6A08 /* ResumeList */ = {
+			isa = PBXGroup;
+			children = (
+				7722CA03280600DD00B248DB /* ResumeListViewController.swift */,
+				7773D6DB280DE0EC006A7D28 /* ResumeListViewModel.swift */,
+				77CC4E13280757DC00CA6A08 /* ResumeListCoordinator.swift */,
+			);
+			path = ResumeList;
+			sourceTree = "<group>";
+		};
+		77CC4E182807680E00CA6A08 /* WorkInfo */ = {
+			isa = PBXGroup;
+			children = (
+				77CC4E1F2807698100CA6A08 /* WorkInfoViewController.swift */,
+				7773D6D9280DE0DF006A7D28 /* WorkInfoViewModel.swift */,
+				77CC4E25280769BE00CA6A08 /* WorkInfoCoordinator.swift */,
+			);
+			path = WorkInfo;
+			sourceTree = "<group>";
+		};
+		77CC4E192807682700CA6A08 /* EducationDetail */ = {
+			isa = PBXGroup;
+			children = (
+				77CC4E1D2807697200CA6A08 /* EducationDetailViewController.swift */,
+				7773D6E1280DE10C006A7D28 /* EducationDetailViewModel.swift */,
+				77CC4E23280769AC00CA6A08 /* EducationDetailCoordinator.swift */,
+			);
+			path = EducationDetail;
+			sourceTree = "<group>";
+		};
+		77CC4E1A2807683200CA6A08 /* ProjectDetail */ = {
+			isa = PBXGroup;
+			children = (
+				77CC4E1B2807695F00CA6A08 /* ProjectDetailViewController.swift */,
+				7773D6DF280DE102006A7D28 /* ProjectDetailViewModel.swift */,
+				77CC4E212807699B00CA6A08 /* ProjectDetailCoordinator.swift */,
+			);
+			path = ProjectDetail;
+			sourceTree = "<group>";
+		};
+		77CC4E272807766C00CA6A08 /* ResumeEditing */ = {
+			isa = PBXGroup;
+			children = (
+				7773D6E3280DE307006A7D28 /* TableCells */,
+				77CC4E282807769100CA6A08 /* ResumeEditingViewController.swift */,
+				7773D6DD280DE0F8006A7D28 /* ResumeEditingViewModel.swift */,
+				77CC4E2A2807769C00CA6A08 /* ResumeEditingCoordinator.swift */,
+			);
+			path = ResumeEditing;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7722C9FB280600DD00B248DB /* ResumeCreator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7722CA10280600E000B248DB /* Build configuration list for PBXNativeTarget "ResumeCreator" */;
+			buildPhases = (
+				5773F13D2C52B41EFDF884FA /* [CP] Check Pods Manifest.lock */,
+				7722C9F8280600DD00B248DB /* Sources */,
+				7722C9F9280600DD00B248DB /* Frameworks */,
+				7722C9FA280600DD00B248DB /* Resources */,
+				D53AAC82C121E8C7AAF87675 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ResumeCreator;
+			productName = ResumeCreator;
+			productReference = 7722C9FC280600DD00B248DB /* ResumeCreator.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7722C9F4280600DD00B248DB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1330;
+				LastUpgradeCheck = 1330;
+				TargetAttributes = {
+					7722C9FB280600DD00B248DB = {
+						CreatedOnToolsVersion = 13.3;
+					};
+				};
+			};
+			buildConfigurationList = 7722C9F7280600DD00B248DB /* Build configuration list for PBXProject "ResumeCreator" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7722C9F3280600DD00B248DB;
+			productRefGroup = 7722C9FD280600DD00B248DB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7722C9FB280600DD00B248DB /* ResumeCreator */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7722C9FA280600DD00B248DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7722CA0C280600E000B248DB /* LaunchScreen.storyboard in Resources */,
+				7722CA09280600E000B248DB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5773F13D2C52B41EFDF884FA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ResumeCreator-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D53AAC82C121E8C7AAF87675 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ResumeCreator/Pods-ResumeCreator-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ResumeCreator/Pods-ResumeCreator-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ResumeCreator/Pods-ResumeCreator-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7722C9F8280600DD00B248DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7722E28B280734B6008DB20B /* ResumeRealmService.swift in Sources */,
+				77CC4E1C2807695F00CA6A08 /* ProjectDetailViewController.swift in Sources */,
+				7773D6E5280DE32D006A7D28 /* WorkSummaryCell.swift in Sources */,
+				7773D6DC280DE0EC006A7D28 /* ResumeListViewModel.swift in Sources */,
+				7722CA1C28060B5800B248DB /* ResumeMockService.swift in Sources */,
+				77CC4E24280769AC00CA6A08 /* EducationDetailCoordinator.swift in Sources */,
+				7722CA04280600DD00B248DB /* ResumeListViewController.swift in Sources */,
+				77A69EFE280AD51300D64579 /* SelfSizedTableView.swift in Sources */,
+				77CC4E1E2807697200CA6A08 /* EducationDetailViewController.swift in Sources */,
+				77CC4E14280757DC00CA6A08 /* ResumeListCoordinator.swift in Sources */,
+				77CC4E292807769100CA6A08 /* ResumeEditingViewController.swift in Sources */,
+				7773D6E7280DE7EF006A7D28 /* EducationDetailCell.swift in Sources */,
+				77A69F03280B29D300D64579 /* StateWrapper.swift in Sources */,
+				77CC4E26280769BE00CA6A08 /* WorkInfoCoordinator.swift in Sources */,
+				7722CA00280600DD00B248DB /* AppDelegate.swift in Sources */,
+				7773D6E9280DEBCB006A7D28 /* ProjectDetailCell.swift in Sources */,
+				7722CA152806022000B248DB /* ResumeModel.swift in Sources */,
+				7773D6E2280DE10C006A7D28 /* EducationDetailViewModel.swift in Sources */,
+				77CC4E11280757A000CA6A08 /* CoordinatorProtocol.swift in Sources */,
+				773931C5280619F9007E0B1C /* ResumeRealmModel.swift in Sources */,
+				7773D6DE280DE0F8006A7D28 /* ResumeEditingViewModel.swift in Sources */,
+				77A69F01280AEC0500D64579 /* ReactiveExtensions.swift in Sources */,
+				7722CA1A2806084100B248DB /* ResumeServiceProtocol.swift in Sources */,
+				7773D6DA280DE0DF006A7D28 /* WorkInfoViewModel.swift in Sources */,
+				77CC4E202807698100CA6A08 /* WorkInfoViewController.swift in Sources */,
+				7722CA02280600DD00B248DB /* SceneDelegate.swift in Sources */,
+				77CC4E2B2807769C00CA6A08 /* ResumeEditingCoordinator.swift in Sources */,
+				77CC4E222807699B00CA6A08 /* ProjectDetailCoordinator.swift in Sources */,
+				7773D6E0280DE102006A7D28 /* ProjectDetailViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7722CA0A280600E000B248DB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7722CA0B280600E000B248DB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7722CA0E280600E000B248DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7722CA0F280600E000B248DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7722CA11280600E000B248DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22294E95EAF3080F08D7A2F3 /* Pods-ResumeCreator.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ResumeCreator/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = TestOrgID.ResumeCreator;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7722CA12280600E000B248DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E59CFA2FDD908F027C0A124B /* Pods-ResumeCreator.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ResumeCreator/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = TestOrgID.ResumeCreator;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7722C9F7280600DD00B248DB /* Build configuration list for PBXProject "ResumeCreator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7722CA0E280600E000B248DB /* Debug */,
+				7722CA0F280600E000B248DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7722CA10280600E000B248DB /* Build configuration list for PBXNativeTarget "ResumeCreator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7722CA11280600E000B248DB /* Debug */,
+				7722CA12280600E000B248DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7722C9F4280600DD00B248DB /* Project object */;
+}
