@@ -21,12 +21,12 @@ final class WorkSummaryCell: UITableViewCell {
     
     private lazy var experienceDuration: UILabel = {
         let label = UILabel()
-        label.text = "Resume name"
+        label.text = "Experience:"
         label.font = .systemFont(ofSize: 16)
         return label
     }()
 
-    func configurate(model: WorkInfoModel) {
+    func configure(model: WorkInfoModel) {
         companyName.text = "Company Name: \(model.companyName)"
         experienceDuration.text = "Experience: \(model.duration) years"
     }

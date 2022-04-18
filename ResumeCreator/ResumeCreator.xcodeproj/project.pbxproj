@@ -24,6 +24,8 @@
 		7773D6E0280DE102006A7D28 /* ProjectDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6DF280DE102006A7D28 /* ProjectDetailViewModel.swift */; };
 		7773D6E2280DE10C006A7D28 /* EducationDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6E1280DE10C006A7D28 /* EducationDetailViewModel.swift */; };
 		7773D6E5280DE32D006A7D28 /* WorkSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6E4280DE32D006A7D28 /* WorkSummaryCell.swift */; };
+		7773D6E7280DE7EF006A7D28 /* EducationDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6E6280DE7EF006A7D28 /* EducationDetailCell.swift */; };
+		7773D6E9280DEBCB006A7D28 /* ProjectDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6E8280DEBCB006A7D28 /* ProjectDetailCell.swift */; };
 		77A69EFE280AD51300D64579 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69EFD280AD51300D64579 /* SelfSizedTableView.swift */; };
 		77A69F01280AEC0500D64579 /* ReactiveExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69F00280AEC0500D64579 /* ReactiveExtensions.swift */; };
 		77A69F03280B29D300D64579 /* StateWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69F02280B29D300D64579 /* StateWrapper.swift */; };
@@ -59,6 +61,8 @@
 		7773D6DF280DE102006A7D28 /* ProjectDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailViewModel.swift; sourceTree = "<group>"; };
 		7773D6E1280DE10C006A7D28 /* EducationDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDetailViewModel.swift; sourceTree = "<group>"; };
 		7773D6E4280DE32D006A7D28 /* WorkSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSummaryCell.swift; sourceTree = "<group>"; };
+		7773D6E6280DE7EF006A7D28 /* EducationDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDetailCell.swift; sourceTree = "<group>"; };
+		7773D6E8280DEBCB006A7D28 /* ProjectDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailCell.swift; sourceTree = "<group>"; };
 		77A69EFD280AD51300D64579 /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
 		77A69F00280AEC0500D64579 /* ReactiveExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveExtensions.swift; sourceTree = "<group>"; };
 		77A69F02280B29D300D64579 /* StateWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWrapper.swift; sourceTree = "<group>"; };
@@ -163,6 +167,8 @@
 			isa = PBXGroup;
 			children = (
 				7773D6E4280DE32D006A7D28 /* WorkSummaryCell.swift */,
+				7773D6E6280DE7EF006A7D28 /* EducationDetailCell.swift */,
+				7773D6E8280DEBCB006A7D28 /* ProjectDetailCell.swift */,
 			);
 			path = TableCells;
 			sourceTree = "<group>";
@@ -373,9 +379,11 @@
 				77CC4E1E2807697200CA6A08 /* EducationDetailViewController.swift in Sources */,
 				77CC4E14280757DC00CA6A08 /* ResumeListCoordinator.swift in Sources */,
 				77CC4E292807769100CA6A08 /* ResumeEditingViewController.swift in Sources */,
+				7773D6E7280DE7EF006A7D28 /* EducationDetailCell.swift in Sources */,
 				77A69F03280B29D300D64579 /* StateWrapper.swift in Sources */,
 				77CC4E26280769BE00CA6A08 /* WorkInfoCoordinator.swift in Sources */,
 				7722CA00280600DD00B248DB /* AppDelegate.swift in Sources */,
+				7773D6E9280DEBCB006A7D28 /* ProjectDetailCell.swift in Sources */,
 				7722CA152806022000B248DB /* ResumeModel.swift in Sources */,
 				7773D6E2280DE10C006A7D28 /* EducationDetailViewModel.swift in Sources */,
 				77CC4E11280757A000CA6A08 /* CoordinatorProtocol.swift in Sources */,

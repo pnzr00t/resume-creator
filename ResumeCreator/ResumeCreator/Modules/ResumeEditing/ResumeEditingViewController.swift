@@ -511,11 +511,10 @@ class ResumeEditingViewController: UIViewController {
         projectDetailTableView.dataSource = self
         educationDetailTableView.dataSource = self
 
-        //workSummaryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         workSummaryTableView.register(WorkSummaryCell.self, forCellReuseIdentifier: WorkSummaryCell.reusableIdentifier)
         skillsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        projectDetailTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        educationDetailTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        projectDetailTableView.register(ProjectDetailCell.self, forCellReuseIdentifier: ProjectDetailCell.reusableIdentifier)
+        educationDetailTableView.register(EducationDetailCell.self, forCellReuseIdentifier: EducationDetailCell.reusableIdentifier)
     }
 
     private func setupBindings() {
@@ -835,7 +834,7 @@ extension ResumeEditingViewController: UITableViewDataSource {
                
         if tableView === workSummaryTableView {
             if let reusableCell = tableView.dequeueReusableCell(withIdentifier: WorkSummaryCell.reusableIdentifier, for: indexPath) as? WorkSummaryCell {
-                reusableCell.configurate(model: workInfoList[indexPath.row])
+                reusableCell.configure(model: workInfoList[indexPath.row])
                 return reusableCell
             } else {
                 let reusableCell = UITableViewCell()
@@ -850,15 +849,25 @@ extension ResumeEditingViewController: UITableViewDataSource {
         }
 
         if tableView === projectDetailTableView {
-            let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-            reusableCell.textLabel?.text = "\(projectDetailList[indexPath.row].projectName)"
-            return reusableCell
+            if let reusableCell = tableView.dequeueReusableCell(withIdentifier: ProjectDetailCell.reusableIdentifier, for: indexPath) as? ProjectDetailCell {
+                reusableCell.configure(model: projectDetailList[indexPath.row])
+                return reusableCell
+            } else {
+                let reusableCell = UITableViewCell()
+                reusableCell.textLabel?.text = "\(projectDetailList[indexPath.row].projectName)"
+                return reusableCell
+            }
         }
 
         if tableView === educationDetailTableView {
-            let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-            reusableCell.textLabel?.text = "\(educationDetailList[indexPath.row].educationInstituteName)"
-            return reusableCell
+            if let reusableCell = tableView.dequeueReusableCell(withIdentifier: EducationDetailCell.reusableIdentifier, for: indexPath) as? EducationDetailCell {
+                reusableCell.configure(model: educationDetailList[indexPath.row])
+                return reusableCell
+            } else {
+                let reusableCell = UITableViewCell()
+                reusableCell.textLabel?.text = "\(educationDetailList[indexPath.row].educationInstituteName)"
+                return reusableCell
+            }
         }
 
         let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
