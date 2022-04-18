@@ -63,8 +63,8 @@ extension ResumeEditingCoordinator: EducationDetailAddingRoute {
 extension ResumeEditingCoordinator: ProjectDetailAddingRoute {
     func projectDetailAdding(projectDetailEditing: ProjectDetailModel, successCompletion: @escaping ((ProjectDetailModel) -> Void)) {
         let dependencies = ProjectDetailViewController.Dependencies(
-            viewModelFactory: ProjectDetailModelFactory(
-                dependencies: ProjectDetailModelFactory.Dependencies(
+            viewModelFactory: ProjectDetailViewModelFactory(
+                dependencies: ProjectDetailViewModelFactory.Dependencies(
                     projectDetailEditing: projectDetailEditing,
                     successSaveCompletion: successCompletion
                 )

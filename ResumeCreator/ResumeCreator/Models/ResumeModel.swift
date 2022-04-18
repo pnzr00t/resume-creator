@@ -136,11 +136,11 @@ struct EducationDetailModel {
 }
 
 struct ProjectDetailModel {
-    let projectName: String
-    let teamSize: Int
-    let projectSummary: String
-    let technologyUsed: String
-    let role: String
+    var projectName: String
+    var teamSize: Int
+    var projectSummary: String
+    var technologyUsed: String
+    var role: String
 
     static func createNewEmptyProjectDetail() -> ProjectDetailModel {
         ProjectDetailModel(projectName: "", teamSize: 0, projectSummary: "", technologyUsed: "", role: "")
