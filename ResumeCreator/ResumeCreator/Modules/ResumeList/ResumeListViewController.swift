@@ -128,8 +128,9 @@ class ResumeListViewController: UIViewController {
     
     private func commonInit() {
         navigationItem.rightBarButtonItem = barButtonItem
-        
-        view.backgroundColor = .green
+
+        view.backgroundColor = .white
+
         title = "Resume list"
         
         view.addSubview(tableView)
