@@ -11,285 +11,6 @@ import RxGesture
 import Foundation
 import UIKit
 
-struct ResumeEditingViewModelFactory {
-    struct Dependencies {
-        let editingResume: ResumeModel
-        let resumeService: ResumeServiceProtocol
-    }
-
-    var dependencies: Dependencies
-    private var resumeState: StateWrapper<ResumeModel>
-    private var skillsUpdatePublisher = PublishRelay<Void>()
-    private let disposeBag = DisposeBag()
-
-    init(dependencies: Dependencies) {
-        self.dependencies = dependencies
-        self.resumeState = StateWrapper<ResumeModel>(state: dependencies.editingResume)
-    }
-
-    struct Input {
-        let viewWillAppear: Signal<Void>
-        let saveResume: Signal<Void>
-        let resumeNameText: Driver<String>
-        let selectedAvatarImage: Signal<UIImage?>
-        let mobileNumberString: Driver<String>
-        let emailAddress: Driver<String>
-        let residenceAddress: Driver<String>
-        let careerObjective: Driver<String>
-        let totalYearsOfExperience: Driver<Int>
-
-        let addSkill: Signal<Void>
-        let selectSkill: Signal<IndexPath>
-        let deleteSkill: Signal<IndexPath>
-
-        let addWorkInfo: Signal<Void>
-        let selectWorkInfo: Signal<IndexPath>
-        let deleteWorkInfo: Signal<IndexPath>
-
-        let addEducationDetail: Signal<Void>
-        let selectEducationDetail: Signal<IndexPath>
-        let deleteEducationDetail: Signal<IndexPath>
-
-        let addProjectDetail: Signal<Void>
-        let selectProjectDetail: Signal<IndexPath>
-        let deleteProjectDetail: Signal<IndexPath>
-    }
-
-    struct ViewModel {
-        let resumeNameText: Driver<String>
-        let selectedImage: Signal<UIImage?>
-        let mobileNumberString: Driver<String>
-        let emailAddress: Driver<String>
-        let residenceAddress: Driver<String>
-        let careerObjective: Driver<String>
-
-        let skillsList: Signal<[String]>
-        let skillEdit: Signal<(String, (String) -> Void)>
-
-        let workInfoList: Signal<[WorkInfoModel]>
-        let workInfoEdit: Signal<(WorkInfoModel, (WorkInfoModel) -> Void)>
-
-        let educationDetailList: Signal<[EducationDetailModel]>
-        let educationDetailEdit: Signal<(EducationDetailModel, (EducationDetailModel) -> Void)>
-
-        let projectDetailList: Signal<[ProjectDetailModel]>
-        let projectDetailEdit: Signal<(ProjectDetailModel, (ProjectDetailModel) -> Void)>
-
-        let allFieldValid: Driver<Bool>
-        let totalYearsOfExperience: Driver<Int>
-    }
-
-    func createViewModel(_ input: Input) -> ViewModel {
-        let resumeNameText = input.resumeNameText
-            .do(onNext: {
-                resumeState.state.resumeName = $0
-            })
-            .startWith(resumeState.state.resumeName)
-
-        let startImage = resumeState.state.picture ?? UIImage(systemName: "face.smiling.fill")
-        let selectedImage = input.selectedAvatarImage
-            .do(onNext: { avatarImage in
-                resumeState.state.picture = avatarImage
-            })
-            .startWith(startImage)
-            
-
-        let mobileNumberString = input.mobileNumberString
-            .do(onNext: {
-                resumeState.state.mobileNumberString = $0
-            })
-            .startWith(resumeState.state.mobileNumberString)
-
-        let emailAddress = input.emailAddress
-            .do(onNext: {
-                resumeState.state.emailAddress = $0
-            })
-            .startWith(resumeState.state.emailAddress)
-
-
-        let residenceAddress = input.residenceAddress
-            .do(onNext: {
-                resumeState.state.residenceAddress = $0
-            })
-            .startWith(resumeState.state.residenceAddress)
-
-        let careerObjective = input.careerObjective
-            .do(onNext: {
-                resumeState.state.careerObjective = $0
-            })
-            .startWith(resumeState.state.careerObjective)
-
-        let totalYearsOfExperience = input.totalYearsOfExperience
-            .do(onNext: { totalYearsOfExperience in
-                resumeState.state.totalYearsOfExperience = totalYearsOfExperience
-            })
-            .startWith(resumeState.state.totalYearsOfExperience)
-
-
-        input.saveResume.asObservable()
-            .subscribe(onNext: {
-                // Save resume, get new resume model (id change from new -> existence(UUID))
-                if let editedResume = dependencies.resumeService.editResume(resumeState.state) {
-                    resumeState.state = editedResume
-                }
-            })
-            .disposed(by: disposeBag)
-
-        
-        // Skills
-        let deleteSkill = input.deleteSkill
-            .do(onNext: { indexPath in
-                resumeState.state.skillsList.remove(at: indexPath.row)
-            })
-            .map { _ in return Void() }
-
-        let skillsList = Signal.merge(input.viewWillAppear, deleteSkill, skillsUpdatePublisher.asSignal())
-            .flatMapLatest {
-                Observable.just(resumeState.state.skillsList).asSignal(onErrorJustReturn: [])
-            }
-
-        let addSkillChain = input.addSkill.map { _ -> (String, (String) -> Void) in
-            return (
-                "",
-                { newSkill in
-                    resumeState.state.skillsList.append(newSkill)
-                    skillsUpdatePublisher.accept(Void())
-                }
-            )
-        }
-        let editSkillChain = input.selectSkill.map { indexPath -> (String, (String) -> Void) in
-            let selectedSkill = resumeState.state.skillsList[indexPath.row]
-            return (
-                selectedSkill,
-                { editedSkill in
-                    resumeState.state.skillsList[indexPath.row] = editedSkill
-                    skillsUpdatePublisher.accept(Void())
-                }
-            )
-        }
-        let skillEdit = Signal.merge(addSkillChain, editSkillChain)
-            .debug(":DEUBUG: skillEdit")
-        
-        // Work Info
-        let deleteWorkInfo = input.deleteWorkInfo
-            .do(onNext: { indexPath in
-                resumeState.state.workSummaryList.remove(at: indexPath.row)
-            })
-            .map { _ in return Void() }
-
-        let workInfoList = Signal.merge(input.viewWillAppear, deleteWorkInfo)
-            .flatMapLatest {
-                Observable.just(resumeState.state.workSummaryList).asSignal(onErrorJustReturn: [])
-            }
-
-        let addWorkInfoChain = input.addWorkInfo.map { _ -> (WorkInfoModel, (WorkInfoModel) -> Void) in
-            return (
-                WorkInfoModel.createNewEmptyWorkInfo(),
-                { newWorkInfo in
-                    resumeState.state.workSummaryList.append(newWorkInfo)
-                }
-            )
-        }
-        let editWorkInfoChain = input.selectWorkInfo.map { indexPath -> (WorkInfoModel, (WorkInfoModel) -> Void) in
-            let selectedWorkInfo = resumeState.state.workSummaryList[indexPath.row]
-            return (
-                selectedWorkInfo,
-                { editedWorkInfo in
-                    resumeState.state.workSummaryList[indexPath.row] = editedWorkInfo
-                }
-            )
-        }
-        let workInfoEdit = Signal.merge(addWorkInfoChain, editWorkInfoChain)
-            .debug(":DEUBUG: workInfoEdit")
-
-        // Education list
-        let deleteEducationList = input.deleteEducationDetail
-            .do(onNext: { indexPath in
-                resumeState.state.educationDetailList.remove(at: indexPath.row)
-            })
-            .map { _ in return Void() }
-
-        let educationDetailList = Signal.merge(input.viewWillAppear, deleteEducationList)
-            .flatMapLatest {
-                Observable.just(resumeState.state.educationDetailList).asSignal(onErrorJustReturn: [])
-            }
-
-        let addEducationDetailChain = input.addEducationDetail.map { _ -> (EducationDetailModel, (EducationDetailModel) -> Void) in
-            return (
-                EducationDetailModel.createNewEmptyEducationDetail(),
-                { newEducationDetail in
-                    resumeState.state.educationDetailList.append(newEducationDetail)
-                }
-            )
-        }
-        let editEducationDetailChain = input.selectEducationDetail.map { indexPath -> (EducationDetailModel, (EducationDetailModel) -> Void) in
-            let selectedEducationDetail = resumeState.state.educationDetailList[indexPath.row]
-            return (
-                selectedEducationDetail,
-                { editedEducationDetail in
-                    resumeState.state.educationDetailList[indexPath.row] = editedEducationDetail
-                }
-            )
-        }
-        let educationDetailEdit = Signal.merge(addEducationDetailChain, editEducationDetailChain)
-            .debug(":DEUBUG: educationDetailEdit")
-
-        // Project Detail
-        let deleteProjectDetail = input.deleteEducationDetail
-            .do(onNext: { indexPath in
-                resumeState.state.projectDetailList.remove(at: indexPath.row)
-            })
-            .map { _ in return Void() }
-
-        let projectDetailList = Signal.merge(input.viewWillAppear, deleteProjectDetail)
-            .flatMapLatest {
-                Observable.just(resumeState.state.projectDetailList).asSignal(onErrorJustReturn: [])
-            }
-        
-        let addProjectDetailChain = input.addProjectDetail.map { _ -> (ProjectDetailModel, (ProjectDetailModel) -> Void) in
-            return (
-                ProjectDetailModel.createNewEmptyProjectDetail(),
-                { newProjectDetail in
-                    resumeState.state.projectDetailList.append(newProjectDetail)
-                }
-            )
-        }
-        let editProjectDetailChain = input.selectProjectDetail.map { indexPath -> (ProjectDetailModel, (ProjectDetailModel) -> Void) in
-            let selectedProjectDetail = resumeState.state.projectDetailList[indexPath.row]
-            return (
-                selectedProjectDetail,
-                { editedProjectDetail in
-                    resumeState.state.projectDetailList[indexPath.row] = editedProjectDetail
-                }
-            )
-        }
-        let projectDetailEdit = Signal.merge(addProjectDetailChain, editProjectDetailChain)
-            .debug(":DEUBUG: projectDetailEdit")
-
-        let resumeNameValid = input.resumeNameText.map({ $0.count > 0 }).asSignal(onErrorJustReturn: true)
-        let allFieldValid = Signal.merge(resumeNameValid)
-            .startWith(false)
-
-        return ViewModel(
-            resumeNameText: resumeNameText,
-            selectedImage: selectedImage,
-            mobileNumberString: mobileNumberString,
-            emailAddress: emailAddress,
-            residenceAddress: residenceAddress,
-            careerObjective: careerObjective,
-            skillsList: skillsList,
-            skillEdit: skillEdit,
-            workInfoList: workInfoList,
-            workInfoEdit: workInfoEdit,
-            educationDetailList: educationDetailList,
-            educationDetailEdit: educationDetailEdit,
-            projectDetailList: projectDetailList,
-            projectDetailEdit: projectDetailEdit,
-            allFieldValid: allFieldValid.asDriver(onErrorJustReturn: true),
-            totalYearsOfExperience: totalYearsOfExperience
-        )
-    }
-}
 
 class ResumeEditingViewController: UIViewController {
     struct Dependencies {
@@ -303,12 +24,12 @@ class ResumeEditingViewController: UIViewController {
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        //scrollView.backgroundColor = .red
+
         return scrollView
     }()
     private lazy var contentView: UIView = {
         let contentView = UIView()
-        //contentView.backgroundColor = .blue
+
         return contentView
     }()
     
@@ -340,15 +61,11 @@ class ResumeEditingViewController: UIViewController {
     }()
     private lazy var avatarImage: UIImageView = {
         UIImageView(image: UIImage(systemName: "face.smiling.fill"))
-        
-        /*image.layer.borderWidth = 1
-         image.layer.masksToBounds = false
-         image.layer.borderColor = UIColor.black.cgColor
-         image.layer.cornerRadius = avatarImageSize.width/2
-         image.clipsToBounds = true*/
     }()
     private lazy var selectedAvatarImage = PublishRelay<UIImage?>()
     
+    // TODO: Refactoring
+    // Need add validation for this field and validation for save button
     private lazy var mobileNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "Mobile number"
@@ -369,6 +86,8 @@ class ResumeEditingViewController: UIViewController {
         return textField
     }()
 
+    // TODO: Refactoring
+    // Need add validation for this field and validation for save button
     private lazy var emailAddressLabel: UILabel = {
         let label = UILabel()
         label.text = "Email Address"
@@ -389,6 +108,8 @@ class ResumeEditingViewController: UIViewController {
         return textField
     }()
 
+    // TODO: Refactoring
+    // Need add Map/Location picker
     private lazy var residenceAddressLabel: UILabel = {
         let label = UILabel()
         label.text = "Residence Address"
@@ -408,7 +129,9 @@ class ResumeEditingViewController: UIViewController {
         textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         return textField
     }()
-    
+
+    // TODO: Refactoring
+    // Make multiline carreeObjectiveTextField
     private lazy var careerObjectiveLabel: UILabel = {
         let label = UILabel()
         label.text = "Career Objective"
@@ -450,6 +173,12 @@ class ResumeEditingViewController: UIViewController {
         return label
     }()
     
+    // TODO: For refactoring
+    // I need cut workSummaryLabel + workSummaryAddButton + workSummaryTableView ...
+    // Move it to new workSummaryData view controller (or create this as genericVC)
+    // and add this here as embeded View controller.
+    // From here i will send workInfoList and receive messages
+    // From control events (selectWorkSummary, deleteWorkSummary, addWorkSummary)
     private lazy var workSummaryLabel: UILabel = {
         let label = UILabel()
         label.text = "Work Summary"
@@ -470,6 +199,8 @@ class ResumeEditingViewController: UIViewController {
     private var workInfoList = [WorkInfoModel]()
 
 
+    // TODO: For refactoring
+    // Same as work WorkSummary
     private lazy var skillsLabel: UILabel = {
         let label = UILabel()
         label.text = "Skills"
@@ -489,6 +220,8 @@ class ResumeEditingViewController: UIViewController {
     private let deleteSkillsPublisher = PublishRelay<IndexPath>()
     private var skillsList = [String]()
 
+    // TODO: For refactoring
+    // Same as work WorkSummary
     private lazy var educationDetailLabel: UILabel = {
         let label = UILabel()
         label.text = "Education Details"
@@ -508,6 +241,8 @@ class ResumeEditingViewController: UIViewController {
     private let deleteEducationDetailPublisher = PublishRelay<IndexPath>()
     private var educationDetailList = [EducationDetailModel]()
 
+    // TODO: For refactoring
+    // Same as work WorkSummary
     private lazy var projectDetailLabel: UILabel = {
         let label = UILabel()
         label.text = "Project Details"
@@ -560,9 +295,9 @@ class ResumeEditingViewController: UIViewController {
     
     private func commonInit() {
         navigationItem.rightBarButtonItem = barButtonItem
-        
+
         title = "Editing resume"
-        
+
         view.addSubview(scrollView)
         scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -674,42 +409,41 @@ class ResumeEditingViewController: UIViewController {
         totalYearsOfExperienceStepper.snp.makeConstraints { make in
             make.top.equalTo(totalYearsOfExperienceLabel.snp.bottom).offset(Constants.labelToTextOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
-            //make.trailing.equalToSuperview().inset(Constants.trailingInset)
         }
-        
+
         contentView.addSubview(totalYearsOfExperienceValueLabel)
         totalYearsOfExperienceValueLabel.snp.makeConstraints { make in
             make.centerY.equalTo(totalYearsOfExperienceStepper.snp.centerY)
             make.leading.equalTo(totalYearsOfExperienceStepper.snp.trailing).offset(Constants.stepperToLabelValueOffset)
         }
-        
+
         // workSummary - label + add button + tableview
         contentView.addSubview(workSummaryLabel)
         workSummaryLabel.snp.makeConstraints { make in
             make.top.equalTo(totalYearsOfExperienceStepper.snp.bottom).offset(Constants.moduleOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
         }
-        
+
         contentView.addSubview(workSummaryAddButton)
         workSummaryAddButton.snp.makeConstraints { make in
             make.centerY.equalTo(workSummaryLabel.snp.centerY)
             make.leading.equalTo(workSummaryLabel.snp.trailing).offset(Constants.labelToAddImageOffset)
         }
-        
+
         contentView.addSubview(workSummaryTableView)
         workSummaryTableView.snp.makeConstraints { make in
             make.top.equalTo(workSummaryLabel.snp.bottom).offset(Constants.labelToTextOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
             make.trailing.equalToSuperview().inset(Constants.trailingInset)
         }
-        
+
         // Skills - label + add button + tableview
         contentView.addSubview(skillsLabel)
         skillsLabel.snp.makeConstraints { make in
             make.top.equalTo(workSummaryTableView.snp.bottom).offset(Constants.moduleOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
         }
-        
+
         contentView.addSubview(skillsAddButton)
         skillsAddButton.snp.makeConstraints { make in
             make.centerY.equalTo(skillsLabel.snp.centerY)
@@ -722,6 +456,7 @@ class ResumeEditingViewController: UIViewController {
             make.leading.equalToSuperview().inset(Constants.leadingInset)
             make.trailing.equalToSuperview().inset(Constants.trailingInset)
         }
+
         
         // Education Detail - label + add button + tableview
         contentView.addSubview(educationDetailLabel)
@@ -755,25 +490,13 @@ class ResumeEditingViewController: UIViewController {
             make.centerY.equalTo(projectDetailLabel.snp.centerY)
             make.leading.equalTo(projectDetailLabel.snp.trailing).offset(Constants.labelToAddImageOffset)
         }
-        
+
         contentView.addSubview(projectDetailTableView)
         projectDetailTableView.snp.makeConstraints { make in
             make.top.equalTo(projectDetailAddButton.snp.bottom).offset(Constants.labelToTextOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
             make.trailing.equalToSuperview().inset(Constants.trailingInset)
-            //make.bottom.equalToSuperview().inset(16)
-        }
-        
-        // FIXME: DELETE THIS
-        let bottomView = UIView()
-        bottomView.backgroundColor = .white
-        contentView.addSubview(bottomView)
-        bottomView.snp.makeConstraints { make in
-            make.top.equalTo(projectDetailTableView.snp.bottom).offset(Constants.moduleOffset)
-            make.leading.equalToSuperview().inset(Constants.leadingInset)
-            make.trailing.equalToSuperview().inset(Constants.trailingInset)
-            make.height.equalTo(100)
-            make.bottom.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(Constants.bottomInsert)
         }
     }
 
@@ -787,11 +510,11 @@ class ResumeEditingViewController: UIViewController {
         skillsTableView.dataSource = self
         projectDetailTableView.dataSource = self
         educationDetailTableView.dataSource = self
-        
-        workSummaryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+
+        workSummaryTableView.register(WorkSummaryCell.self, forCellReuseIdentifier: WorkSummaryCell.reusableIdentifier)
         skillsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        projectDetailTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        educationDetailTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        projectDetailTableView.register(ProjectDetailCell.self, forCellReuseIdentifier: ProjectDetailCell.reusableIdentifier)
+        educationDetailTableView.register(EducationDetailCell.self, forCellReuseIdentifier: EducationDetailCell.reusableIdentifier)
     }
 
     private func setupBindings() {
@@ -1022,24 +745,6 @@ extension ResumeEditingViewController: UIImagePickerControllerDelegate, UINaviga
         picker.delegate = self
         present(picker, animated: true)
     }
-    
-    /*func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        // Read the view controller we’re moving from.
-        guard let fromViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {
-            return
-        }
-
-        // Check whether our view controller array already contains that view controller. If it does it means we’re pushing a different view controller on top rather than popping it, so exit.
-        if navigationController.viewControllers.contains(fromViewController) {
-            return
-        }
-
-        // We’re still here – it means we’re popping the view controller, so we can check whether it’s a buy view controller
-        if let buyViewController = fromViewController as? BuyViewController {
-            // We're popping a buy view controller; end its coordinator
-            childDidFinish(buyViewController.coordinator)
-        }
-    }*/
 }
 
 extension ResumeEditingViewController: UITableViewDelegate {
@@ -1126,68 +831,50 @@ extension ResumeEditingViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        reusableCell.textLabel?.text = "Hello world \(indexPath.row)"
-        
+               
         if tableView === workSummaryTableView {
-            reusableCell.textLabel?.text = "\(workInfoList[indexPath.row].companyName)"
+            if let reusableCell = tableView.dequeueReusableCell(withIdentifier: WorkSummaryCell.reusableIdentifier, for: indexPath) as? WorkSummaryCell {
+                reusableCell.configure(model: workInfoList[indexPath.row])
+                return reusableCell
+            } else {
+                let reusableCell = UITableViewCell()
+                reusableCell.textLabel?.text = "\(workInfoList[indexPath.row].companyName)"
+            }
         }
 
         if tableView === skillsTableView {
+            let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
             reusableCell.textLabel?.text = "\(skillsList[indexPath.row])"
+            return reusableCell
         }
 
         if tableView === projectDetailTableView {
-            reusableCell.textLabel?.text = "\(projectDetailList[indexPath.row].projectName)"
+            if let reusableCell = tableView.dequeueReusableCell(withIdentifier: ProjectDetailCell.reusableIdentifier, for: indexPath) as? ProjectDetailCell {
+                reusableCell.configure(model: projectDetailList[indexPath.row])
+                return reusableCell
+            } else {
+                let reusableCell = UITableViewCell()
+                reusableCell.textLabel?.text = "\(projectDetailList[indexPath.row].projectName)"
+                return reusableCell
+            }
         }
 
         if tableView === educationDetailTableView {
-            reusableCell.textLabel?.text = "\(educationDetailList[indexPath.row].educationInstituteName)"
-        }
-        
-        return reusableCell
-    }
-}
-/*extension ResumeListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectResumePublisher.accept(resumeList[indexPath.row])
-    }
-
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Some trick with completion handler on delete animation
-            // Problem with auto update resumeList after deleteResumePublisher
-            // Best solution will be using RXDataSource
-            let deletedResume = resumeList.remove(at: indexPath.row)
-            CATransaction.begin()
-            tableView.beginUpdates()
-            CATransaction.setCompletionBlock { [weak self] in
-                guard let self = self else { return }
-                self.deleteResumePublisher.accept(deletedResume)
+            if let reusableCell = tableView.dequeueReusableCell(withIdentifier: EducationDetailCell.reusableIdentifier, for: indexPath) as? EducationDetailCell {
+                reusableCell.configure(model: educationDetailList[indexPath.row])
+                return reusableCell
+            } else {
+                let reusableCell = UITableViewCell()
+                reusableCell.textLabel?.text = "\(educationDetailList[indexPath.row].educationInstituteName)"
+                return reusableCell
             }
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            tableView.endUpdates()
-            CATransaction.commit()
         }
+
+        let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
+        return reusableCell
     }
 }
 
-extension ResumeListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        resumeList.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        reusableCell.textLabel?.text = resumeList[indexPath.row].resumeName
-        
-        return reusableCell
-    }
-}*/
 
 fileprivate enum Constants {
     static let topInset: CGFloat = 16
@@ -1203,4 +890,5 @@ fileprivate enum Constants {
     
     static let addImageSize: CGSize = CGSize(width: 24, height: 24)
     static let labelToAddImageOffset: CGFloat = 16
+    static let bottomInsert: CGFloat = 50
 }

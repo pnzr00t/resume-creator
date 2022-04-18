@@ -46,8 +46,8 @@ extension ResumeEditingCoordinator: WorkInfoAddingRoute {
 extension ResumeEditingCoordinator: EducationDetailAddingRoute {
     func educationDetailAdding(educationDetailEditing: EducationDetailModel, successCompletion: @escaping ((EducationDetailModel) -> Void)) {
         let dependencies = EducationDetailViewController.Dependencies(
-            viewModelFactory: EducationDetailModelFactory(
-                dependencies: EducationDetailModelFactory.Dependencies(
+            viewModelFactory: EducationDetailViewModelFactory(
+                dependencies: EducationDetailViewModelFactory.Dependencies(
                     educationDetailEditing: educationDetailEditing,
                     successSaveCompletion: successCompletion
                 )
