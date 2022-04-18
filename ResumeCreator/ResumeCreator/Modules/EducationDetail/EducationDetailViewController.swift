@@ -30,12 +30,14 @@ struct EducationDetailModelFactory {
         let saveResume: Signal<Void>
         let educationInstituteNameText: Driver<String>
         let datePicker: Signal<Date>
+        let classPicker: Signal<Int>
     }
 
     struct ViewModel {
         let allFieldValid: Driver<Bool>
         let educationInstituteNameText: Driver<String>
         let dateString: Driver<String>
+        let classString: Driver<String>
     }
 
     func createViewModel(_ input: Input) -> ViewModel {
@@ -63,6 +65,16 @@ struct EducationDetailModelFactory {
 
                 return dateFormatter.string(from: date)
             }
+        
+        let classString = input.classPicker
+            .do(onNext: {
+                educationDetailState.state.classEducation = $0
+            })
+            .startWith(educationDetailState.state.classEducation)
+            .map { classInt -> String in
+
+                return EducationDetailModel.ClassEducation(id: classInt).getString()
+            }
 
         let educationInstituteNameValid = educationInstituteNameText.map({ $0.count > 0 }).asSignal(onErrorJustReturn: true)
         let allFieldValid = Signal.merge(educationInstituteNameValid)
@@ -71,7 +83,8 @@ struct EducationDetailModelFactory {
         return ViewModel(
             allFieldValid: allFieldValid.asDriver(onErrorJustReturn: true),
             educationInstituteNameText: educationInstituteNameText,
-            dateString: dateString.asDriver(onErrorJustReturn: "")
+            dateString: dateString.asDriver(onErrorJustReturn: ""),
+            classString: classString.asDriver(onErrorJustReturn: "")
         )
     }
 }
@@ -114,6 +127,7 @@ class EducationDetailViewController: UIViewController {
         return textField
     }()
 
+    /// Date picker + label + DatePicker ToolBar
     private lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
 
@@ -157,6 +171,45 @@ class EducationDetailViewController: UIViewController {
     }()
     private let datePickerPublisher = PublishRelay<Date>()
 
+    /// Class picker + label + classPicker ToolBar
+    private lazy var classPicker: UIPickerView = {
+        let classPicker = UIPickerView()
+
+        return classPicker
+    }()
+    private lazy var classPickerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Class"
+        label.font = .systemFont(ofSize: 16)
+        return label
+    }()
+    private var choiceClassDoneBarButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
+    private lazy var classPickerTextField: UITextField = {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+
+        toolbar.setItems([choiceClassDoneBarButton], animated: true)
+
+
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Choice Class..."
+        textField.keyboardType = UIKeyboardType.default
+        textField.returnKeyType = UIReturnKeyType.done
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.font = UIFont.systemFont(ofSize: 13)
+        textField.borderStyle = UITextField.BorderStyle.roundedRect
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing;
+        textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        textField.allowsEditingTextAttributes = false
+        
+        textField.inputView = classPicker
+        textField.inputAccessoryView = toolbar
+
+        return textField
+    }()
+    private let classPickerPublisher = PublishRelay<Int>()
+    
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
         super.init(nibName: nil, bundle: nil)
@@ -186,13 +239,17 @@ class EducationDetailViewController: UIViewController {
         navigationItem.rightBarButtonItem = barButtonItem
 
         title = "Education detail editing"
-        
+
+        self.classPicker.delegate = self
+        self.classPicker.dataSource = self
+
         view.addSubview(contentView)
         contentView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.leading.trailing.bottom.equalToSuperview()
         }
 
+        
         // Education institute name
         contentView.addSubview(educationInstituteNameLabel)
         educationInstituteNameLabel.snp.makeConstraints { make in
@@ -221,6 +278,20 @@ class EducationDetailViewController: UIViewController {
             make.leading.equalToSuperview().inset(Constants.leadingInset)
             make.trailing.equalToSuperview().inset(Constants.trailingInset)
         }
+
+        // Class picker institute name
+        contentView.addSubview(classPickerLabel)
+        classPickerLabel.snp.makeConstraints { make in
+            make.top.equalTo(datePickerTextField.snp.bottom).offset(Constants.moduleOffset)
+            make.leading.equalToSuperview().inset(Constants.leadingInset)
+        }
+
+        contentView.addSubview(classPickerTextField)
+        classPickerTextField.snp.makeConstraints { make in
+            make.top.equalTo(classPickerLabel.snp.bottom).offset(Constants.labelToTextOffset)
+            make.leading.equalToSuperview().inset(Constants.leadingInset)
+            make.trailing.equalToSuperview().inset(Constants.trailingInset)
+        }
     }
 
     private func setupBindings() {
@@ -229,7 +300,8 @@ class EducationDetailViewController: UIViewController {
                 viewWillAppear: rx.viewWillAppear.asSignal(),
                 saveResume: barButtonItem.rx.tap.asSignal(),
                 educationInstituteNameText: educationInstituteNameTextField.rx.text.compactMap { $0 }.asDriver(onErrorJustReturn: "").skip(1),
-                datePicker: datePickerPublisher.asSignal()
+                datePicker: datePickerPublisher.asSignal(),
+                classPicker: classPickerPublisher.asSignal()
             )
         )
 
@@ -266,6 +338,51 @@ class EducationDetailViewController: UIViewController {
                 self.datePickerTextField.text = dateString
             })
             .disposed(by: disposeBag)
+
+        // Class picker
+        choiceClassDoneBarButton.rx.tap
+            .subscribe { [weak self] _ in
+                guard let self = self else { return }
+                self.view.endEditing(true)
+
+                let selectedRow = self.classPicker.selectedRow(inComponent: 0)
+                self.classPickerPublisher.accept(selectedRow)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.classString
+            .drive(onNext: { [weak self] classString in
+                guard let self = self else { return }
+
+                self.classPickerTextField.text = classString
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+extension EducationDetailViewController: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        if pickerView === classPicker {
+            return 1
+        }
+        return 0
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView === classPicker {
+            return EducationDetailModel.ClassEducation.allCases.count
+        }
+        return 0
+    }
+    
+}
+
+extension EducationDetailViewController: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView === classPicker {
+            return EducationDetailModel.ClassEducation(id: row).getString()
+        }
+        return nil
     }
 }
 
