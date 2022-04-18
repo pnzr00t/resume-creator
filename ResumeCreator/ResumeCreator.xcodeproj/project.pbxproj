@@ -23,6 +23,7 @@
 		7773D6DE280DE0F8006A7D28 /* ResumeEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6DD280DE0F8006A7D28 /* ResumeEditingViewModel.swift */; };
 		7773D6E0280DE102006A7D28 /* ProjectDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6DF280DE102006A7D28 /* ProjectDetailViewModel.swift */; };
 		7773D6E2280DE10C006A7D28 /* EducationDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6E1280DE10C006A7D28 /* EducationDetailViewModel.swift */; };
+		7773D6E5280DE32D006A7D28 /* WorkSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7773D6E4280DE32D006A7D28 /* WorkSummaryCell.swift */; };
 		77A69EFE280AD51300D64579 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69EFD280AD51300D64579 /* SelfSizedTableView.swift */; };
 		77A69F01280AEC0500D64579 /* ReactiveExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69F00280AEC0500D64579 /* ReactiveExtensions.swift */; };
 		77A69F03280B29D300D64579 /* StateWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69F02280B29D300D64579 /* StateWrapper.swift */; };
@@ -57,6 +58,7 @@
 		7773D6DD280DE0F8006A7D28 /* ResumeEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeEditingViewModel.swift; sourceTree = "<group>"; };
 		7773D6DF280DE102006A7D28 /* ProjectDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailViewModel.swift; sourceTree = "<group>"; };
 		7773D6E1280DE10C006A7D28 /* EducationDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDetailViewModel.swift; sourceTree = "<group>"; };
+		7773D6E4280DE32D006A7D28 /* WorkSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSummaryCell.swift; sourceTree = "<group>"; };
 		77A69EFD280AD51300D64579 /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
 		77A69F00280AEC0500D64579 /* ReactiveExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveExtensions.swift; sourceTree = "<group>"; };
 		77A69F02280B29D300D64579 /* StateWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWrapper.swift; sourceTree = "<group>"; };
@@ -157,6 +159,14 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		7773D6E3280DE307006A7D28 /* TableCells */ = {
+			isa = PBXGroup;
+			children = (
+				7773D6E4280DE32D006A7D28 /* WorkSummaryCell.swift */,
+			);
+			path = TableCells;
+			sourceTree = "<group>";
+		};
 		77A69EFF280AD51B00D64579 /* CommonViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +240,7 @@
 		77CC4E272807766C00CA6A08 /* ResumeEditing */ = {
 			isa = PBXGroup;
 			children = (
+				7773D6E3280DE307006A7D28 /* TableCells */,
 				77CC4E282807769100CA6A08 /* ResumeEditingViewController.swift */,
 				7773D6DD280DE0F8006A7D28 /* ResumeEditingViewModel.swift */,
 				77CC4E2A2807769C00CA6A08 /* ResumeEditingCoordinator.swift */,
@@ -353,6 +364,7 @@
 			files = (
 				7722E28B280734B6008DB20B /* ResumeRealmService.swift in Sources */,
 				77CC4E1C2807695F00CA6A08 /* ProjectDetailViewController.swift in Sources */,
+				7773D6E5280DE32D006A7D28 /* WorkSummaryCell.swift in Sources */,
 				7773D6DC280DE0EC006A7D28 /* ResumeListViewModel.swift in Sources */,
 				7722CA1C28060B5800B248DB /* ResumeMockService.swift in Sources */,
 				77CC4E24280769AC00CA6A08 /* EducationDetailCoordinator.swift in Sources */,
