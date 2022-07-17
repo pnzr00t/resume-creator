@@ -235,7 +235,7 @@ struct ResumeEditingViewModelFactory {
 
 
         // Project Detail
-        let deleteProjectDetail = input.deleteEducationDetail
+        let deleteProjectDetail = input.deleteProjectDetail
             .do(onNext: { indexPath in
                 resumeState.state.projectDetailList.remove(at: indexPath.row)
             })
