@@ -42,6 +42,8 @@
 		77CC4E26280769BE00CA6A08 /* WorkInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E25280769BE00CA6A08 /* WorkInfoCoordinator.swift */; };
 		77CC4E292807769100CA6A08 /* ResumeEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E282807769100CA6A08 /* ResumeEditingViewController.swift */; };
 		77CC4E2B2807769C00CA6A08 /* ResumeEditingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E2A2807769C00CA6A08 /* ResumeEditingCoordinator.swift */; };
+		77DE33552884B5B1006F775B /* SkillsEmbedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DE33542884B5B1006F775B /* SkillsEmbedViewController.swift */; };
+		77DE33572884B658006F775B /* SkillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DE33562884B658006F775B /* SkillCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +84,8 @@
 		77CC4E25280769BE00CA6A08 /* WorkInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkInfoCoordinator.swift; sourceTree = "<group>"; };
 		77CC4E282807769100CA6A08 /* ResumeEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeEditingViewController.swift; sourceTree = "<group>"; };
 		77CC4E2A2807769C00CA6A08 /* ResumeEditingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeEditingCoordinator.swift; sourceTree = "<group>"; };
+		77DE33542884B5B1006F775B /* SkillsEmbedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsEmbedViewController.swift; sourceTree = "<group>"; };
+		77DE33562884B658006F775B /* SkillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillCell.swift; sourceTree = "<group>"; };
 		D6C5F7D66040E488ACEA247E /* Pods_ResumeCreator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ResumeCreator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E59CFA2FDD908F027C0A124B /* Pods-ResumeCreator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ResumeCreator.release.xcconfig"; path = "Target Support Files/Pods-ResumeCreator/Pods-ResumeCreator.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +181,7 @@
 				7773D6E4280DE32D006A7D28 /* WorkSummaryCell.swift */,
 				7773D6E6280DE7EF006A7D28 /* EducationDetailCell.swift */,
 				7773D6E8280DEBCB006A7D28 /* ProjectDetailCell.swift */,
+				77DE33562884B658006F775B /* SkillCell.swift */,
 			);
 			path = TableCells;
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				77B5F8342884878900FCC88F /* WorkSummaryEmbedViewController.swift */,
+				77DE33542884B5B1006F775B /* SkillsEmbedViewController.swift */,
 			);
 			path = EmbedTable;
 			sourceTree = "<group>";
@@ -404,6 +410,7 @@
 				7722E28B280734B6008DB20B /* ResumeRealmService.swift in Sources */,
 				77CC4E1C2807695F00CA6A08 /* ProjectDetailViewController.swift in Sources */,
 				7773D6E5280DE32D006A7D28 /* WorkSummaryCell.swift in Sources */,
+				77DE33572884B658006F775B /* SkillCell.swift in Sources */,
 				7773D6DC280DE0EC006A7D28 /* ResumeListViewModel.swift in Sources */,
 				7722CA1C28060B5800B248DB /* ResumeMockService.swift in Sources */,
 				77CC4E24280769AC00CA6A08 /* EducationDetailCoordinator.swift in Sources */,
@@ -415,6 +422,7 @@
 				7773D6E7280DE7EF006A7D28 /* EducationDetailCell.swift in Sources */,
 				77A69F03280B29D300D64579 /* StateWrapper.swift in Sources */,
 				77CC4E26280769BE00CA6A08 /* WorkInfoCoordinator.swift in Sources */,
+				77DE33552884B5B1006F775B /* SkillsEmbedViewController.swift in Sources */,
 				7722CA00280600DD00B248DB /* AppDelegate.swift in Sources */,
 				7773D6E9280DEBCB006A7D28 /* ProjectDetailCell.swift in Sources */,
 				77B5F83228847CF900FCC88F /* ReusableIdentifierProtocol.swift in Sources */,
