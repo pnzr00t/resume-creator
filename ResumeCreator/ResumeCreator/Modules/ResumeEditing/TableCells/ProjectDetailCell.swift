@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class ProjectDetailCell: UITableViewCell {
+final class ProjectDetailCell: UITableViewCell, ReusableIdentifierProtocol {
 
     static let reusableIdentifier = "ProjectDetailCell.id"
 
