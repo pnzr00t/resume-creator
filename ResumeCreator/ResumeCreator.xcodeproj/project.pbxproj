@@ -44,6 +44,8 @@
 		77CC4E2B2807769C00CA6A08 /* ResumeEditingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E2A2807769C00CA6A08 /* ResumeEditingCoordinator.swift */; };
 		77DE33552884B5B1006F775B /* SkillsEmbedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DE33542884B5B1006F775B /* SkillsEmbedViewController.swift */; };
 		77DE33572884B658006F775B /* SkillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DE33562884B658006F775B /* SkillCell.swift */; };
+		77DE33592884B8C4006F775B /* EducationDetailEmbedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DE33582884B8C4006F775B /* EducationDetailEmbedViewController.swift */; };
+		77DE335B2884BAAB006F775B /* ProjectDetailEmbedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DE335A2884BAAB006F775B /* ProjectDetailEmbedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +88,8 @@
 		77CC4E2A2807769C00CA6A08 /* ResumeEditingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeEditingCoordinator.swift; sourceTree = "<group>"; };
 		77DE33542884B5B1006F775B /* SkillsEmbedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsEmbedViewController.swift; sourceTree = "<group>"; };
 		77DE33562884B658006F775B /* SkillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillCell.swift; sourceTree = "<group>"; };
+		77DE33582884B8C4006F775B /* EducationDetailEmbedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDetailEmbedViewController.swift; sourceTree = "<group>"; };
+		77DE335A2884BAAB006F775B /* ProjectDetailEmbedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailEmbedViewController.swift; sourceTree = "<group>"; };
 		D6C5F7D66040E488ACEA247E /* Pods_ResumeCreator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ResumeCreator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E59CFA2FDD908F027C0A124B /* Pods-ResumeCreator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ResumeCreator.release.xcconfig"; path = "Target Support Files/Pods-ResumeCreator/Pods-ResumeCreator.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -217,6 +221,8 @@
 			children = (
 				77B5F8342884878900FCC88F /* WorkSummaryEmbedViewController.swift */,
 				77DE33542884B5B1006F775B /* SkillsEmbedViewController.swift */,
+				77DE33582884B8C4006F775B /* EducationDetailEmbedViewController.swift */,
+				77DE335A2884BAAB006F775B /* ProjectDetailEmbedViewController.swift */,
 			);
 			path = EmbedTable;
 			sourceTree = "<group>";
@@ -414,9 +420,11 @@
 				7773D6DC280DE0EC006A7D28 /* ResumeListViewModel.swift in Sources */,
 				7722CA1C28060B5800B248DB /* ResumeMockService.swift in Sources */,
 				77CC4E24280769AC00CA6A08 /* EducationDetailCoordinator.swift in Sources */,
+				77DE33592884B8C4006F775B /* EducationDetailEmbedViewController.swift in Sources */,
 				7722CA04280600DD00B248DB /* ResumeListViewController.swift in Sources */,
 				77A69EFE280AD51300D64579 /* SelfSizedTableView.swift in Sources */,
 				77CC4E1E2807697200CA6A08 /* EducationDetailViewController.swift in Sources */,
+				77DE335B2884BAAB006F775B /* ProjectDetailEmbedViewController.swift in Sources */,
 				77CC4E14280757DC00CA6A08 /* ResumeListCoordinator.swift in Sources */,
 				77CC4E292807769100CA6A08 /* ResumeEditingViewController.swift in Sources */,
 				7773D6E7280DE7EF006A7D28 /* EducationDetailCell.swift in Sources */,
