@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class WorkSummaryCell: UITableViewCell {
+final class WorkSummaryCell: UITableViewCell, ReusableIdentifierProtocol {
 
     static let reusableIdentifier = "WorkSummaryCell.id"
 

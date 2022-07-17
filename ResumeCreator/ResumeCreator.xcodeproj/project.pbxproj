@@ -29,6 +29,8 @@
 		77A69EFE280AD51300D64579 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69EFD280AD51300D64579 /* SelfSizedTableView.swift */; };
 		77A69F01280AEC0500D64579 /* ReactiveExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69F00280AEC0500D64579 /* ReactiveExtensions.swift */; };
 		77A69F03280B29D300D64579 /* StateWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A69F02280B29D300D64579 /* StateWrapper.swift */; };
+		77B5F82F2884679F00FCC88F /* ReactiveTableViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B5F82E2884679F00FCC88F /* ReactiveTableViewViewController.swift */; };
+		77B5F83228847CF900FCC88F /* ReusableIdentifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B5F83128847CF900FCC88F /* ReusableIdentifierProtocol.swift */; };
 		77CC4E11280757A000CA6A08 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E10280757A000CA6A08 /* CoordinatorProtocol.swift */; };
 		77CC4E14280757DC00CA6A08 /* ResumeListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E13280757DC00CA6A08 /* ResumeListCoordinator.swift */; };
 		77CC4E1C2807695F00CA6A08 /* ProjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC4E1B2807695F00CA6A08 /* ProjectDetailViewController.swift */; };
@@ -66,6 +68,8 @@
 		77A69EFD280AD51300D64579 /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
 		77A69F00280AEC0500D64579 /* ReactiveExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveExtensions.swift; sourceTree = "<group>"; };
 		77A69F02280B29D300D64579 /* StateWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWrapper.swift; sourceTree = "<group>"; };
+		77B5F82E2884679F00FCC88F /* ReactiveTableViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveTableViewViewController.swift; sourceTree = "<group>"; };
+		77B5F83128847CF900FCC88F /* ReusableIdentifierProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableIdentifierProtocol.swift; sourceTree = "<group>"; };
 		77CC4E10280757A000CA6A08 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		77CC4E13280757DC00CA6A08 /* ResumeListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeListCoordinator.swift; sourceTree = "<group>"; };
 		77CC4E1B2807695F00CA6A08 /* ProjectDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailViewController.swift; sourceTree = "<group>"; };
@@ -132,7 +136,9 @@
 			children = (
 				7722CA132806020600B248DB /* Models */,
 				7722CA18280607ED00B248DB /* Services */,
+				77B5F83028847C9600FCC88F /* CommonProtocols */,
 				77A69EFF280AD51B00D64579 /* CommonViews */,
+				77B5F82D2884676800FCC88F /* CommonViewControllers */,
 				77CC4E12280757A600CA6A08 /* Coordinator */,
 				77CC4E0F280755DF00CA6A08 /* Modules */,
 				7722C9FF280600DD00B248DB /* AppDelegate.swift */,
@@ -181,6 +187,22 @@
 				77A69F02280B29D300D64579 /* StateWrapper.swift */,
 			);
 			path = CommonViews;
+			sourceTree = "<group>";
+		};
+		77B5F82D2884676800FCC88F /* CommonViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				77B5F82E2884679F00FCC88F /* ReactiveTableViewViewController.swift */,
+			);
+			path = CommonViewControllers;
+			sourceTree = "<group>";
+		};
+		77B5F83028847C9600FCC88F /* CommonProtocols */ = {
+			isa = PBXGroup;
+			children = (
+				77B5F83128847CF900FCC88F /* ReusableIdentifierProtocol.swift */,
+			);
+			path = CommonProtocols;
 			sourceTree = "<group>";
 		};
 		77CC4E0F280755DF00CA6A08 /* Modules */ = {
@@ -384,7 +406,9 @@
 				77CC4E26280769BE00CA6A08 /* WorkInfoCoordinator.swift in Sources */,
 				7722CA00280600DD00B248DB /* AppDelegate.swift in Sources */,
 				7773D6E9280DEBCB006A7D28 /* ProjectDetailCell.swift in Sources */,
+				77B5F83228847CF900FCC88F /* ReusableIdentifierProtocol.swift in Sources */,
 				7722CA152806022000B248DB /* ResumeModel.swift in Sources */,
+				77B5F82F2884679F00FCC88F /* ReactiveTableViewViewController.swift in Sources */,
 				7773D6E2280DE10C006A7D28 /* EducationDetailViewModel.swift in Sources */,
 				77CC4E11280757A000CA6A08 /* CoordinatorProtocol.swift in Sources */,
 				773931C5280619F9007E0B1C /* ResumeRealmModel.swift in Sources */,
