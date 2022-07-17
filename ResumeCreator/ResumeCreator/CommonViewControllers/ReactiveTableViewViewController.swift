@@ -13,8 +13,11 @@ import SnapKit
 class ReactiveTableViewViewController<T, CellType: UITableViewCell & ReusableIdentifierProtocol>: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     internal var dataList = [T]()
-    private let selectElementPublisher = PublishRelay<T>()
-    private let deleteElementPublisher = PublishRelay<T>()
+    //private let selectElementPublisher = PublishRelay<T>()
+    //private let deleteElementPublisher = PublishRelay<T>()
+    private let selectElementPublisher = PublishRelay<IndexPath>()
+    private let deleteElementPublisher = PublishRelay<IndexPath>()
+
 
     internal let tableView = SelfSizedTableView()
 
@@ -25,7 +28,13 @@ class ReactiveTableViewViewController<T, CellType: UITableViewCell & ReusableIde
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        commonInit()
+    }
+
     private func commonInit() {
         view.backgroundColor = .white
 
@@ -42,7 +51,8 @@ class ReactiveTableViewViewController<T, CellType: UITableViewCell & ReusableIde
 
     // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectElementPublisher.accept(dataList[indexPath.row])
+        //selectElementPublisher.accept(dataList[indexPath.row])
+        selectElementPublisher.accept(indexPath)
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -59,7 +69,8 @@ class ReactiveTableViewViewController<T, CellType: UITableViewCell & ReusableIde
             tableView.beginUpdates()
             CATransaction.setCompletionBlock { [weak self] in
                 guard let self = self else { return }
-                self.deleteElementPublisher.accept(deletedResume)
+                //self.deleteElementPublisher.accept(deletedResume)
+                self.deleteElementPublisher.accept(indexPath)
             }
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
@@ -78,13 +89,8 @@ class ReactiveTableViewViewController<T, CellType: UITableViewCell & ReusableIde
     }
 
     func getCellForRowAtIndexPath(_ indexPath: IndexPath) -> UITableViewCell {
+        // If something forgot override, throw error
         fatalError("getCellForRowAtIndexPath(_ indexPath: IndexPath) has not been implemented")
-        /*
-         let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-         reusableCell.textLabel?.text = dataList[indexPath.row].resumeName
-         
-         return reusableCell
-         */
     }
 
     func setNewData(dataList: [T]) {
@@ -108,29 +114,19 @@ extension ReactiveTableViewViewController {
 }
 
 extension ReactiveTableViewViewController.Reactive {
-    var selectElement: ControlEvent<T> {
+    /*var selectElement: ControlEvent<T> {
         ControlEvent(events: base.selectElementPublisher)
     }
 
     var deleteElement: ControlEvent<T> {
+        ControlEvent(events: base.deleteElementPublisher)
+    }*/
+
+    var selectElement: ControlEvent<IndexPath> {
         ControlEvent(events: base.selectElementPublisher)
     }
 
-    /*var contentHeight: ControlEvent<CGFloat> {
-        tableView.rx.contentHeight
-    }*/
-}
-
-
-final class WordSummaryEmbedViewController: ReactiveTableViewViewController<WorkInfoModel, WorkSummaryCell> {
-    override func getCellForRowAtIndexPath(_ indexPath: IndexPath) -> UITableViewCell {
-        if let reusableCell = super.tableView.dequeueReusableCell(withIdentifier: WorkSummaryCell.reusableIdentifier, for: indexPath) as? WorkSummaryCell {
-            reusableCell.configure(model: super.dataList[indexPath.row])
-            return reusableCell
-        } else {
-            let reusableCell = UITableViewCell()
-            reusableCell.textLabel?.text = "\(super.dataList[indexPath.row].companyName)"
-            return reusableCell
-        }
+    var deleteElement: ControlEvent<IndexPath> {
+        ControlEvent(events: base.deleteElementPublisher)
     }
 }

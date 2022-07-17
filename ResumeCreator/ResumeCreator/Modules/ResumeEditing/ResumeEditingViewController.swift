@@ -190,13 +190,7 @@ class ResumeEditingViewController: UIViewController {
         addButton.setImage(UIImage(systemName: "plus.app.fill"), for: .normal)
         return addButton
     }()
-    private lazy var workSummaryTableView: SelfSizedTableView = {
-        let selfSizedTableView = SelfSizedTableView()
-        return selfSizedTableView
-    }()
-    private let selectWorkSummaryPublisher = PublishRelay<IndexPath>()
-    private let deleteWorkSummaryPublisher = PublishRelay<IndexPath>()
-    private var workInfoList = [WorkInfoModel]()
+    private let workSummaryTableView = WorkSummaryEmbedViewController()
 
 
     // TODO: For refactoring
@@ -430,8 +424,12 @@ class ResumeEditingViewController: UIViewController {
             make.leading.equalTo(workSummaryLabel.snp.trailing).offset(Constants.labelToAddImageOffset)
         }
 
-        contentView.addSubview(workSummaryTableView)
-        workSummaryTableView.snp.makeConstraints { make in
+        addChild(workSummaryTableView)
+        workSummaryTableView.view.translatesAutoresizingMaskIntoConstraints = false
+        workSummaryTableView.didMove(toParent: self)
+
+        contentView.addSubview(workSummaryTableView.view)
+        workSummaryTableView.view.snp.makeConstraints { make in
             make.top.equalTo(workSummaryLabel.snp.bottom).offset(Constants.labelToTextOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
             make.trailing.equalToSuperview().inset(Constants.trailingInset)
@@ -440,7 +438,7 @@ class ResumeEditingViewController: UIViewController {
         // Skills - label + add button + tableview
         contentView.addSubview(skillsLabel)
         skillsLabel.snp.makeConstraints { make in
-            make.top.equalTo(workSummaryTableView.snp.bottom).offset(Constants.moduleOffset)
+            make.top.equalTo(workSummaryTableView.view.snp.bottom).offset(Constants.moduleOffset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
         }
 
@@ -501,17 +499,14 @@ class ResumeEditingViewController: UIViewController {
     }
 
     private func tableViewIniting() {
-        workSummaryTableView.delegate = self
         skillsTableView.delegate = self
         projectDetailTableView.delegate = self
         educationDetailTableView.delegate = self
 
-        workSummaryTableView.dataSource = self
         skillsTableView.dataSource = self
         projectDetailTableView.dataSource = self
         educationDetailTableView.dataSource = self
 
-        workSummaryTableView.register(WorkSummaryCell.self, forCellReuseIdentifier: WorkSummaryCell.reusableIdentifier)
         skillsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         projectDetailTableView.register(ProjectDetailCell.self, forCellReuseIdentifier: ProjectDetailCell.reusableIdentifier)
         educationDetailTableView.register(EducationDetailCell.self, forCellReuseIdentifier: EducationDetailCell.reusableIdentifier)
@@ -533,8 +528,8 @@ class ResumeEditingViewController: UIViewController {
                 selectSkill: selectSkillsPublisher.asSignal(),
                 deleteSkill: deleteSkillsPublisher.asSignal(),
                 addWorkInfo: workSummaryAddButton.rx.tap.asSignal(),
-                selectWorkInfo: selectWorkSummaryPublisher.asSignal(),
-                deleteWorkInfo: deleteWorkSummaryPublisher.asSignal(),
+                selectWorkInfo: workSummaryTableView.reactive.selectElement.asSignal(),
+                deleteWorkInfo: workSummaryTableView.reactive.deleteElement.asSignal(),
                 addEducationDetail: educationDetailAddButton.rx.tap.asSignal(),
                 selectEducationDetail: selectEducationDetailPublisher.asSignal(),
                 deleteEducationDetail: deleteEducationDetailPublisher.asSignal(),
@@ -648,8 +643,7 @@ class ResumeEditingViewController: UIViewController {
             .subscribe(onNext: { [weak self] workInfoList in
                 guard let self = self else { return }
 
-                self.workInfoList = workInfoList
-                self.workSummaryTableView.reloadData()
+                self.workSummaryTableView.setNewData(dataList: workInfoList)
             })
             .disposed(by: disposeBag)
 
@@ -749,10 +743,6 @@ extension ResumeEditingViewController: UIImagePickerControllerDelegate, UINaviga
 
 extension ResumeEditingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView === workSummaryTableView {
-            selectWorkSummaryPublisher.accept(indexPath)
-        }
-
         if tableView === skillsTableView {
             selectSkillsPublisher.accept(indexPath)
         }
@@ -772,11 +762,6 @@ extension ResumeEditingViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if tableView === workSummaryTableView {
-                workInfoList.remove(at: indexPath.row)
-                deleteFromTable(tableView: tableView, indexPath: indexPath, deleteRelay: deleteWorkSummaryPublisher)
-            }
-
             if tableView === skillsTableView {
                 skillsList.remove(at: indexPath.row)
                 deleteFromTable(tableView: tableView, indexPath: indexPath, deleteRelay: deleteSkillsPublisher)
@@ -811,9 +796,6 @@ extension ResumeEditingViewController: UITableViewDelegate {
 
 extension ResumeEditingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView === workSummaryTableView {
-            return workInfoList.count
-        }
 
         if tableView === skillsTableView {
             return skillsList.count
@@ -831,16 +813,6 @@ extension ResumeEditingViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-               
-        if tableView === workSummaryTableView {
-            if let reusableCell = tableView.dequeueReusableCell(withIdentifier: WorkSummaryCell.reusableIdentifier, for: indexPath) as? WorkSummaryCell {
-                reusableCell.configure(model: workInfoList[indexPath.row])
-                return reusableCell
-            } else {
-                let reusableCell = UITableViewCell()
-                reusableCell.textLabel?.text = "\(workInfoList[indexPath.row].companyName)"
-            }
-        }
 
         if tableView === skillsTableView {
             let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
